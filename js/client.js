@@ -110,42 +110,39 @@ var getListSorters = function(t, options) {
 
     return t.list('cards')
         .then(function(list) {
-            var finished = [];
             //hack to loop through each card to get its custom data
-            var cardData = list.cards.map(function(card, i){
-                t.get(card.id, 'shared')
+            var promises = list.cards.map(function(card, i){
+                return t.get(card.id, 'shared')
                     .then(function(data){
-                        finished.push(true);
-                        cardData[i].customData = data;
+                        card.customData = data;
+                        return card;
                     });
-                return card;
             });
 
-            //hopefully this doesn't lock up the browser...
-            while(finished.length < cardData.length)
-                var waiting = true;
+            return Promise.all(promises)
+                .then(function(cardData){
+                    return [
+                        {
+                            text: "Priority",
+                            icon: GRAY_ICON,
+                            callback: function(t, opts) {
+                                // Trello will call this if the user clicks on this sort
+                                // opts.cards contains all card objects in the list
+                                var sortedCards = cardData.sort(function(a, b) {
+                                    if(!a.customData.priority) a.customData.priority = 'none';
+                                    if(!b.customData.priority) b.customData.priority = 'none';
+                                    return priorityOrder.indexOf(a.customData.priority) - priorityOrder.indexOf(b.customData.priority);
+                                });
 
-            return [
-                {
-                    text: "Priority",
-                    icon: GRAY_ICON,
-                    callback: function(t, opts) {
-                        // Trello will call this if the user clicks on this sort
-                        // opts.cards contains all card objects in the list
-                        var sortedCards = cardData.sort(function(a, b) {
-                            if(!a.customData.priority) a.customData.priority = 'none';
-                            if(!b.customData.priority) b.customData.priority = 'none';
-                            return priorityOrder.indexOf(a.customData.priority) - priorityOrder.indexOf(b.customData.priority);
-                        });
-
-                        return {
-                            sortedIds: sortedCards.map(function(c) {
-                                return c.id;
-                            })
-                        };
-                    }
-                }
-            ];
+                                return {
+                                    sortedIds: sortedCards.map(function(c) {
+                                        return c.id;
+                                    })
+                                };
+                            }
+                        }
+                    ];
+                });
         });
 }
 
