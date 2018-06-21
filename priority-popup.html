@@ -2,6 +2,7 @@
 
 <head>
     <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <style>
         .item {
             padding: 5px 0;
@@ -23,27 +24,43 @@
             height: 14px;
             margin-left: 8px;
         }
+        .checkbox {
+            float: right;
+            display: none;
+        }
+        .item.selected .checkbox {
+            display: block;
+        }
     </style>
     <script src="https://p.trellocdn.com/power-up.min.js"></script>
 </head>
 
 <body>
     <div class="item-list">
-        <div class="item" onclick="handleClick(this, 'high')">
+        <div class="item none" onclick="handleClick(this, 'none')">
+            <div class="item-color" style="background-color: transparent;"></div>
+            <span>None</span>
+            <div class="checkbox">&#10004;</div>
+        </div>
+        <div class="item high" onclick="handleClick(this, 'high')">
             <div class="item-color" style="background-color: #eb5a46;"></div>
             <span>High</span>
+            <div class="checkbox">&#10004;</div>
         </div>
-        <div class="item" onclick="handleClick(this, 'medium')">
+        <div class="item medium" onclick="handleClick(this, 'medium')">
             <div class="item-color" style="background-color: #ff9f1a;"></div>
             <span>Medium</span>
+            <div class="checkbox">&#10004;</div>
         </div>
-        <div class="item" onclick="handleClick(this, 'low')">
+        <div class="item low" onclick="handleClick(this, 'low')">
             <div class="item-color" style="background-color: #f2d600;"></div>
             <span>Low</span>
+            <div class="checkbox">&#10004;</div>
         </div>
-        <div class="item" onclick="handleClick(this, 'backburner')">
+        <div class="item backburner" onclick="handleClick(this, 'backburner')">
             <div class="item-color" style="background-color: #0079bf;"></div>
             <span>Backburner</span>
+            <div class="checkbox">&#10004;</div>
         </div>
     </div>
 </body>
@@ -51,17 +68,28 @@
 <script>
     var t = TrelloPowerUp.iframe();
 
+    //resize popup to fit items
     t.render(function(){
         t.sizeTo('.item-list').done();
     });
 
-    var handleClick = function(e, type) {
-        console.log(type);
+    //get existing setting
+    t.get('card', 'shared', 'priority')
+        .then(function(data) {
+            console.log('data: ', data)
+            jQuery('.item '+data).addClass('selected');
+        });
 
-        t.set('card', 'shared', 'priority', type)
-            .then(function(){
-                t.closePopup();
-            });
+    //handle click
+    var handleClick = function(e, type) {
+        if(type === 'none') {
+            t.remove('card', 'shared', 'priority');
+        } else {
+            t.set('card', 'shared', 'priority', type)
+                .then(function(){
+                    t.closePopup();
+                });
+        }
     }
 </script>
 
