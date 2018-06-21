@@ -109,10 +109,10 @@ var getListSorters = function(t, options) {
     var priorityOrder = ['high', 'medium', 'low', 'none', 'backburner'];
 
     return t.list('cards')
-        .then(function(cards) {
-            console.log('cards', cards)
+        .then(function(list) {
+            console.log('cards', list.cards)
             //hack to loop through each card to get its custom data
-            var cardData = cards.map(function(card, i){
+            var cardData = list.cards.map(function(card, i){
                 t.get(card.id, 'shared')
                     .then(function(data){
                         cardData[i].customData = data;
