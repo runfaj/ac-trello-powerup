@@ -75,7 +75,37 @@ var GRAY_ICON = './images/icon-gray.svg';
 // var randomBadgeColor = function() {
 //   return ['green', 'yellow', 'red', 'none'][Math.floor(Math.random() * 4)];
 // };
-//
+
+var getBadges = function(t) {
+    var priorityColors = {
+        'high': 'red',
+        'medium': 'orange',
+        'low': 'yellow',
+        'backburner': 'blue'
+    };
+
+    return t.get('card', 'shared', 'priority')
+        .then(function(priority){
+            if(priority)
+                return [{
+                    icon: GRAY_ICON,
+                    text: priority.replace(
+                        /\w\S*/g,
+                        function(txt) {
+                            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                        }
+                    ),
+                    color: priorityColors[priority],
+                    callback: function(t) {
+                        return t.popup({
+                            title: 'Card Priority',
+                            url: './priority-popup.html'
+                        });
+                    }
+                }];
+        });
+}
+
 // var getBadges = function(t){
 //   return t.card('name')
 //   .get('name')
@@ -321,9 +351,9 @@ TrelloPowerUp.initialize({
     //    }
     //   ];
     // },
-    // 'card-badges': function(t, options){
-    //   return getBadges(t);
-    // },
+    'card-badges': function(t, options){
+      return getBadges(t);
+    },
     'card-buttons': function(t, options) {
         return [
             {
@@ -347,9 +377,9 @@ TrelloPowerUp.initialize({
             // }
         ];
     },
-    // 'card-detail-badges': function(t, options) {
-    //   return getBadges(t);
-    // },
+    'card-detail-badges': function(t, options) {
+      return getBadges(t);
+    },
     // 'card-from-url': function(t, options) {
     //    options.url has the url in question
     //    if we know cool things about that url we can give Trello a name and desc

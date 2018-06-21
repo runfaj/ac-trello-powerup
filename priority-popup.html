@@ -27,6 +27,7 @@
         .checkbox {
             float: right;
             margin-right: 20px;
+            margin-top: 2px;
             display: none;
         }
         .item.selected .checkbox {
@@ -69,22 +70,26 @@
 <script>
     var t = TrelloPowerUp.iframe();
 
-    //resize popup to fit items
     t.render(function(){
+        //resize popup to fit items
         t.sizeTo('.item-list').done();
+
+        //get existing setting
+        t.get('card', 'shared', 'priority')
+            .then(function(priority) {
+                if(!priority) priority = 'none';
+                jQuery('.item.' + priority).addClass('selected');
+            });
     });
 
-    //get existing setting
-    t.get('card', 'shared', 'priority')
-        .then(function(data) {
-            if(!data) data = 'none';
-            jQuery('.item.' + data).addClass('selected');
-        });
 
     //handle click
     var handleClick = function(e, type) {
         if(type === 'none') {
-            t.remove('card', 'shared', 'priority');
+            t.remove('card', 'shared', 'priority')
+                .then(function(){
+                    t.closePopup();
+                });
         } else {
             t.set('card', 'shared', 'priority', type)
                 .then(function(){
