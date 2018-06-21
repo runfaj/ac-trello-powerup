@@ -4,19 +4,24 @@
     <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css">
     <style>
         .item {
-            padding: 4px 0;
-
-            span {
-                display: inline-block;
-                vertical-align: middle;
-            }
+            padding: 5px 0;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .item span {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .item:hover {
+            background-color: #e2e4e6;
         }
         .item-color {
             display: inline-block;
             vertical-align: middle;
-            border-radius: 2px;
+            border-radius: 4px;
             width: 14px;
             height: 14px;
+            margin-left: 8px;
         }
     </style>
     <script src="https://p.trellocdn.com/power-up.min.js"></script>
@@ -25,19 +30,19 @@
 <body>
     <div class="item-list">
         <div class="item" onclick="handleClick(e, 'high')">
-            <div class="item-color" style="background-color: red;"></div>
+            <div class="item-color" style="background-color: #eb5a46;"></div>
             <span>High</span>
         </div>
         <div class="item" onclick="handleClick(e, 'medium')">
-            <div class="item-color" style="background-color: red;"></div>
+            <div class="item-color" style="background-color: #ff9f1a;"></div>
             <span>Medium</span>
         </div>
         <div class="item" onclick="handleClick(e, 'low')">
-            <div class="item-color" style="background-color: red;"></div>
+            <div class="item-color" style="background-color: #f2d600;"></div>
             <span>Low</span>
         </div>
         <div class="item" onclick="handleClick(e, 'backburner')">
-            <div class="item-color" style="background-color: red;"></div>
+            <div class="item-color" style="background-color: #0079bf;"></div>
             <span>Backburner</span>
         </div>
     </div>
