@@ -345,7 +345,7 @@ TrelloPowerUp.initialize({
                 // that callback function should probably open a popup, overlay, or boardBar
                 icon: AC_ICON,
                 text: 'Allencomm',
-                callback: callback: function(t) {
+                callback: function(t) {
                     return t.popup({title: 'Allencomm Trello Power-up', url: './board-btn-popup.html'});
                 }
             }
