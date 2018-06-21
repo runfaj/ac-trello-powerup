@@ -184,26 +184,6 @@ var GRAY_ICON = './images/icon-gray.svg';
 //   });
 // };
 
-var priorityButtonCallback = function(t) {
-    var onItemClick = function(t, opts) {
-        console.log('priority opts', opts);
-
-        t.closePopup();
-    };
-
-    var items = [
-        { text:'High', color: '#eb5a46', callback: onItemClick },
-        { text:"Medium", color: '#ff9f1a', callback: onItemClick },
-        { text:"Low", color: '#f2d600', callback: onItemClick },
-        { text:"Backburner", color: '#0079bf', callback: onItemClick }
-    ];
-
-    return t.popup({
-        title: 'Card Priority',
-        items: items
-    });
-}
-
 // var cardButtonCallback = function(t){
 //    Trello Power-Up Popups are actually pretty powerful
 //    Searching is a pretty common use case, so why reinvent the wheel
@@ -351,7 +331,12 @@ TrelloPowerUp.initialize({
                 // we recommend that you use a popup on click generally
                 icon: GRAY_ICON, // don't use a colored icon here
                 text: 'Priority',
-                callback: priorityButtonCallback
+                callback: function(t) {
+                    return t.popup({
+                        title: 'Card Priority',
+                        url: './priority-popup.html'
+                    });
+                }
             }
             // , {
             //    but of course, you could also just kick off to a url if that's your thing

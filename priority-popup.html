@@ -1,0 +1,63 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css">
+    <style>
+        .item {
+            padding: 4px 0;
+
+            span {
+                display: inline-block;
+                vertical-align: middle;
+            }
+        }
+        .item-color {
+            display: inline-block;
+            vertical-align: middle;
+            border-radius: 2px;
+            width: 14px;
+            height: 14px;
+        }
+    </style>
+    <script src="https://p.trellocdn.com/power-up.min.js"></script>
+</head>
+
+<body>
+    <div class="item-list">
+        <div class="item" onclick="handleClick(e, 'high')">
+            <div class="item-color" style="background-color: red;"></div>
+            <span>High</span>
+        </div>
+        <div class="item" onclick="handleClick(e, 'medium')">
+            <div class="item-color" style="background-color: red;"></div>
+            <span>Medium</span>
+        </div>
+        <div class="item" onclick="handleClick(e, 'low')">
+            <div class="item-color" style="background-color: red;"></div>
+            <span>Low</span>
+        </div>
+        <div class="item" onclick="handleClick(e, 'backburner')">
+            <div class="item-color" style="background-color: red;"></div>
+            <span>Backburner</span>
+        </div>
+    </div>
+</body>
+
+<script>
+    var t = TrelloPowerUp.iframe();
+
+    t.render(function(){
+        t.sizeTo('.item-list').done();
+    });
+
+    var handleClick = function(e, type) {
+        console.log(type);
+
+        t.set('card', 'shared', 'priority', type)
+            .then(function(){
+                t.closePopup();
+            });
+    }
+</script>
+
+</html>
