@@ -111,18 +111,26 @@ var getListSorters = function(t, options) {
     return t.list('cards')
         .then(function(cards) {
             console.log('cards', cards)
+            //hack to loop through each card to get its custom data
+            var cardData = cards.map(function(card, i){
+                t.get(card.id, 'shared')
+                    .then(function(data){
+                        cardData[i].customData = data;
+                    });
+                return card;
+            });
+
             return [
                 {
                     text: "Priority",
                     icon: GRAY_ICON,
                     callback: function(t, opts) {
-                        console.log('opts', opts)
                         // Trello will call this if the user clicks on this sort
                         // opts.cards contains all card objects in the list
-                        var sortedCards = opts.cards.sort(function(a, b) {
-                            if(!a.priority) a.priority = 'none';
-                            if(!b.priority) b.priority = 'none';
-                            return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority);
+                        var sortedCards = cardData.sort(function(a, b) {
+                            if(!a.customData.priority) a.customData.priority = 'none';
+                            if(!b.customData.priority) b.customData.priority = 'none';
+                            return priorityOrder.indexOf(a.customData.priority) - priorityOrder.indexOf(b.customData.priority);
                         });
 
                         return {
