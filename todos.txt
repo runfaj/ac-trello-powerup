@@ -9,8 +9,6 @@ future: need settings to define teams on a project (pm/design/AL/TL)
 
 misc boards
 ===========
-move priority to custom field on cards
-add sort by priority on lists
 add a assign to project setting, show the project info somewhere
 
 task list view

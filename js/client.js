@@ -123,7 +123,7 @@ var getListSorters = function(t, options) {
                 .then(function(cardData){
                     return [
                         {
-                            text: "Priority",
+                            text: "Priority (High -> Low)",
                             icon: GRAY_ICON,
                             callback: function(t, opts) {
                                 // Trello will call this if the user clicks on this sort
@@ -132,6 +132,25 @@ var getListSorters = function(t, options) {
                                     if(!a.customData.priority) a.customData.priority = 'none';
                                     if(!b.customData.priority) b.customData.priority = 'none';
                                     return priorityOrder.indexOf(a.customData.priority) - priorityOrder.indexOf(b.customData.priority);
+                                });
+
+                                return {
+                                    sortedIds: sortedCards.map(function(c) {
+                                        return c.id;
+                                    })
+                                };
+                            }
+                        },
+                        {
+                            text: "Priority (Low -> High)",
+                            icon: GRAY_ICON,
+                            callback: function(t, opts) {
+                                // Trello will call this if the user clicks on this sort
+                                // opts.cards contains all card objects in the list
+                                var sortedCards = cardData.sort(function(a, b) {
+                                    if(!a.customData.priority) a.customData.priority = 'none';
+                                    if(!b.customData.priority) b.customData.priority = 'none';
+                                    return priorityOrder.indexOf(b.customData.priority) - priorityOrder.indexOf(a.customData.priority);
                                 });
 
                                 return {
