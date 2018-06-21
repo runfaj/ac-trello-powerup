@@ -84,18 +84,21 @@ var getBadges = function(t) {
         'backburner': 'blue'
     };
 
-    return t.get('card', 'shared', 'priority')
-        .then(function(priority){
-            if(priority)
+    return t.get('card', 'shared')
+        .then(function(data){
+            console.log(data)
+            var list = [];
+
+            if(data.priority)
                 return [{
-                    icon: GRAY_ICON,
-                    text: priority.replace(
+                    //icon: GRAY_ICON,
+                    text: data.priority.replace(
                         /\w\S*/g,
                         function(txt) {
                             return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
                         }
                     ),
-                    color: priorityColors[priority],
+                    color: priorityColors[data.priority],
                     callback: function(t) {
                         return t.popup({
                             title: 'Card Priority',
@@ -103,6 +106,8 @@ var getBadges = function(t) {
                         });
                     }
                 }];
+
+            return list;
         });
 }
 
