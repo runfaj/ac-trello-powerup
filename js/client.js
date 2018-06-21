@@ -115,12 +115,13 @@ var getListSorters = function(t, options) {
                     text: "Priority",
                     icon: GRAY_ICON,
                     callback: function(t, opts) {
+                        debugger;
                         // Trello will call this if the user clicks on this sort
                         // opts.cards contains all card objects in the list
                         var sortedCards = opts.cards.sort(function(a, b) {
-                            if(!a) a = 'none';
-                            if(!b) b = 'none';
-                            return priorityOrder.indexOf(a) - priorityOrder.indexOf(b);
+                            if(!a.priority) a.priority = 'none';
+                            if(!b.priority) b.priority = 'none';
+                            return priorityOrder.indexOf(a.priority) - priorityOrder.indexOf(b.priority);
                         });
 
                         return {
