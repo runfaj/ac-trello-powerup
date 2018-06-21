@@ -69,6 +69,10 @@
         t.sizeTo('.item-list').done();
 
     });
+
+    jQuery('.item.settings').on('click',function(){
+        return t.popup({title: 'Allencomm Power-up Settings', url: './settings.html'});
+    });
 </script>
 
 </html>
