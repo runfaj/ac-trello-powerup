@@ -1,0 +1,40 @@
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://p.trellocdn.com/power-up.min.js"></script>
+    <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css">
+</head>
+
+<body>
+    <div class="item-list">
+        <p>Task View</p>
+        <div class="item">My Tasks</div>
+        <div class="item">My Projects</div>
+        <div class="item">All Projects</div>
+
+        <hr />
+        
+        <p>Hour View</p>
+        <div class="item">My Tasks</div>
+        <div class="item">Board Tasks</div>
+        <div class="item">Group Tasks</div>
+
+        <hr />
+
+        <div class="item">Settings</div>
+
+    </div>
+</body>
+
+<script>
+    var Promise = TrelloPowerUp.Promise;
+    var t = TrelloPowerUp.iframe();
+
+    t.render(function(){
+        //resize popup to fit items
+        t.sizeTo('.item-list').done();
+    });
+</script>
+
+</html>

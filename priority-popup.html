@@ -1,8 +1,9 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://p.trellocdn.com/power-up.min.js"></script>
+    <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css">
     <style>
         .item {
             padding: 5px 0;
@@ -34,7 +35,6 @@
             display: block;
         }
     </style>
-    <script src="https://p.trellocdn.com/power-up.min.js"></script>
 </head>
 
 <body>
@@ -68,6 +68,7 @@
 </body>
 
 <script>
+    var Promise = TrelloPowerUp.Promise;
     var t = TrelloPowerUp.iframe();
 
     t.render(function(){

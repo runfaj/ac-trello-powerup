@@ -1,28 +1,86 @@
 <html>
-  <head>
-    <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css">
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://p.trellocdn.com/power-up.min.js"></script>
-  </head>
-  <body>
+    <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css">
+    <style>
+        .selected-project, .selected-user {
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
     <div id="content">
-      <p>Shared - Select a fruit</p>
-      <select id="fruit">
-        <option value="apple">Apple</option>
-        <option value="banana">Banana</option>
-        <option value="date">Date</option>
-        <option value="lemon">Lemon</option>
-        <option value="pineapple">Pineapple</option>
-      </select>
-      <p>Private - Select a vegetable</p>
-      <select id="vegetable">
-        <option value="broccoli">Broccoli</option>
-        <option value="corn">Corn</option>
-        <option value="kale">Kale</option>
-        <option value="onion">Onion</option>
-        <option value="spinach">Spinach</option>
-      </select>
-      <button id="save" class="mod-primary">Save</button>
+        <p>Projects</p>
+        <select class="projects"></select>
+        <button class="add-project">+</button>
+
+        <div class="selected-project">
+            <label>Project Name:</label>
+            <input type="text" class="project-name" />
+
+            <label>Billing Code:</label>
+            <input type="text" class="billing-code" />
+
+            <button class="mod-primary project-save">Save</button>
+        </div>
+
+        <hr />
+
+        <p>Users</p>
+        <select class="users"></select>
+
+        <div class="selected-user">
+            <label>User Group:</label>
+            <select class="groups">
+                <option value="none"></option>
+                <option value="pm">Project Manager</option>
+                <option value="designer">Designer</option>
+                <option value="artist">Artist</option>
+                <option value="programmer">Programmer</option>
+                <option value="writer">Writer</option>
+            </select>
+        </div>
+
+        <hr />
+
+        <button class="done"></button>
     </div>
-    <script src="./js/settings.js"></script>
-  </body>
+</body>
+
+<script>
+    var Promise = TrelloPowerUp.Promise;
+    var t = TrelloPowerUp.iframe();
+
+    var projectList = [];
+    var userList = [];
+
+    t.render(function() {
+        t.organization('id').then(function(organization){
+            console.log('org',organization)
+        });
+
+        return Promise.all([
+                t.get('organization', 'shared', 'projects')
+            ])
+            .spread(function(projects) {
+                if(projects) projectList = projects;
+                console.log('projects', projectList)
+            })
+            .then(function() {
+                t.sizeTo('#content').done();
+            })
+    });
+
+    jQuery('.done').on('click',function(){
+        t.closePopup();
+    });
+</script>
+
 </html>
