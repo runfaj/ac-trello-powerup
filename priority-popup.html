@@ -78,8 +78,7 @@
     t.get('card', 'shared', 'priority')
         .then(function(data) {
             if(!data) data = 'none';
-            console.log('data', data)
-            jQuery('.item .' + data).addClass('selected');
+            jQuery('.item.' + data).addClass('selected');
         });
 
     //handle click
