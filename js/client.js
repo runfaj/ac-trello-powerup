@@ -84,30 +84,53 @@ var getBadges = function(t) {
         'backburner': 'blue'
     };
 
-    return t.get('card', 'shared')
-        .then(function(data){
-            console.log(data)
-            var list = [];
+    return t.get('card', 'shared').then(function(data) {
+        var list = [];
 
-            if(data.priority)
-                return [{
+        if (data.priority)
+            return [
+                {
                     //icon: GRAY_ICON,
-                    text: data.priority.replace(
-                        /\w\S*/g,
-                        function(txt) {
-                            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-                        }
-                    ),
+                    text: data.priority.replace(/\w\S*/g, function(txt) {
+                        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                    }),
                     color: priorityColors[data.priority],
                     callback: function(t) {
-                        return t.popup({
-                            title: 'Card Priority',
-                            url: './priority-popup.html'
-                        });
+                        return t.popup({title: 'Card Priority', url: './priority-popup.html'});
                     }
-                }];
+                }
+            ];
 
-            return list;
+        return list;
+    });
+}
+
+var getListSorters(t, options) {
+    var priorityOrder = ['high', 'medium', 'low', 'none', 'backburner'];
+
+    return t.list('name', 'id')
+        .then(function(list) {
+            return [
+                {
+                    text: "Priority",
+                    icon: GRAY_ICON,
+                    callback: function(t, opts) {
+                        // Trello will call this if the user clicks on this sort
+                        // opts.cards contains all card objects in the list
+                        var sortedCards = opts.cards.sort(function(a, b) {
+                            if(!a) a = 'none';
+                            if(!b) b = 'none';
+                            return priorityOrder.indexOf(a) - priorityOrder.indexOf(b);
+                        });
+
+                        return {
+                            sortedIds: sortedCards.map(function(c) {
+                                return c.id;
+                            })
+                        };
+                    }
+                }
+            ];
         });
 }
 
@@ -356,8 +379,8 @@ TrelloPowerUp.initialize({
     //    }
     //   ];
     // },
-    'card-badges': function(t, options){
-      return getBadges(t);
+    'card-badges': function(t, options) {
+        return getBadges(t);
     },
     'card-buttons': function(t, options) {
         return [
@@ -367,10 +390,7 @@ TrelloPowerUp.initialize({
                 icon: GRAY_ICON, // don't use a colored icon here
                 text: 'Priority',
                 callback: function(t) {
-                    return t.popup({
-                        title: 'Card Priority',
-                        url: './priority-popup.html'
-                    });
+                    return t.popup({title: 'Card Priority', url: './priority-popup.html'});
                 }
             }
             // , {
@@ -383,8 +403,11 @@ TrelloPowerUp.initialize({
         ];
     },
     'card-detail-badges': function(t, options) {
-      return getBadges(t);
+        return getBadges(t);
     },
+    'list-sorters': function(t, options) {
+        return getListSorters(t, options);
+    }
     // 'card-from-url': function(t, options) {
     //    options.url has the url in question
     //    if we know cool things about that url we can give Trello a name and desc
