@@ -110,15 +110,20 @@ var getListSorters = function(t, options) {
 
     return t.list('cards')
         .then(function(list) {
-            console.log('cards', list.cards)
+            var finished = [];
             //hack to loop through each card to get its custom data
             var cardData = list.cards.map(function(card, i){
                 t.get(card.id, 'shared')
                     .then(function(data){
+                        finished.push(true);
                         cardData[i].customData = data;
                     });
                 return card;
             });
+
+            //hopefully this doesn't lock up the browser...
+            while(finished.length < cardData.length)
+                var waiting = true;
 
             return [
                 {
