@@ -4,25 +4,53 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://p.trellocdn.com/power-up.min.js"></script>
     <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css">
+    <style>
+        hr {
+            margin: 10px 0;
+        }
+        h4 {
+            margin-bottom: 0;
+            text-align: center;
+        }
+        .item {
+            padding: 5px 0;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .item:hover {
+            background-color: #e2e4e6;
+        }
+
+        .item.settings {
+            display: none;
+        }
+        .last-separator {
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+    </style>
 </head>
 
 <body>
     <div class="item-list">
-        <p>Task View</p>
+        <h4>Task View</h4>
         <div class="item">My Tasks</div>
         <div class="item">My Projects</div>
         <div class="item">All Projects</div>
 
         <hr />
-        
-        <p>Hour View</p>
+
+        <h4>Hour View</h4>
         <div class="item">My Tasks</div>
         <div class="item">Board Tasks</div>
         <div class="item">Group Tasks</div>
 
-        <hr />
+        <hr class="last-separator" />
 
-        <div class="item">Settings</div>
+        <div class="item settings">Settings</div>
 
     </div>
 </body>
@@ -32,8 +60,14 @@
     var t = TrelloPowerUp.iframe();
 
     t.render(function(){
+        if(t.memberCanWriteToModel('organization')) {
+            jQuery('.last-separator').addClass('show');
+            jQuery('.item.settings').addClass('show');
+        }
+
         //resize popup to fit items
         t.sizeTo('.item-list').done();
+
     });
 </script>
 
