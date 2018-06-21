@@ -105,7 +105,7 @@ var getBadges = function(t) {
     });
 }
 
-var getListSorters(t, options) {
+var getListSorters = function(t, options) {
     var priorityOrder = ['high', 'medium', 'low', 'none', 'backburner'];
 
     return t.list('name', 'id')
@@ -500,5 +500,3 @@ TrelloPowerUp.initialize({
     //   }
     // }
 });
-
-console.log('Loaded by: ' + document.referrer);
