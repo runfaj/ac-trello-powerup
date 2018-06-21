@@ -108,14 +108,15 @@ var getBadges = function(t) {
 var getListSorters = function(t, options) {
     var priorityOrder = ['high', 'medium', 'low', 'none', 'backburner'];
 
-    return t.list('name', 'id')
-        .then(function(list) {
+    return t.list('cards')
+        .then(function(cards) {
+            console.log('cards', cards)
             return [
                 {
                     text: "Priority",
                     icon: GRAY_ICON,
                     callback: function(t, opts) {
-                        console.log(opts)
+                        console.log('opts', opts)
                         // Trello will call this if the user clicks on this sort
                         // opts.cards contains all card objects in the list
                         var sortedCards = opts.cards.sort(function(a, b) {
