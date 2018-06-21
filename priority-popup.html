@@ -26,6 +26,7 @@
         }
         .checkbox {
             float: right;
+            margin-right: 20px;
             display: none;
         }
         .item.selected .checkbox {
@@ -76,8 +77,9 @@
     //get existing setting
     t.get('card', 'shared', 'priority')
         .then(function(data) {
-            console.log('data: ', data)
-            jQuery('.item '+data).addClass('selected');
+            if(!data) data = 'none';
+            console.log('data', data)
+            jQuery('.item .' + data).addClass('selected');
         });
 
     //handle click
