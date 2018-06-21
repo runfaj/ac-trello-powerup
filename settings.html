@@ -5,7 +5,17 @@
     <script src="https://p.trellocdn.com/power-up.min.js"></script>
     <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css">
     <style>
-        .selected-project, .selected-user {
+        hr {
+            margin: 10px 0;
+        }
+        h4 {
+            margin-bottom: 0;
+            text-align: center;
+        }
+        .selected-project {
+            display: none;
+        }
+        .selected-user {
             display: none;
         }
 
@@ -17,7 +27,7 @@
 
 <body>
     <div id="content">
-        <p>Projects</p>
+        <h4>Projects</h4>
         <select class="projects"></select>
         <button class="add-project">+</button>
 
@@ -33,7 +43,7 @@
 
         <hr />
 
-        <p>Users</p>
+        <h4>Users</h4>
         <select class="users"></select>
 
         <div class="selected-user">
@@ -47,10 +57,6 @@
                 <option value="writer">Writer</option>
             </select>
         </div>
-
-        <hr />
-
-        <button class="done"></button>
     </div>
 </body>
 
