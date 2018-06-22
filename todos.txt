@@ -30,3 +30,21 @@ Group tasks (all open tasks for a group)
 future: My Team Tasks (all open tasks for my team)
 summary of hours per group with the associated cost of those hours
     for selected date range
+
+
+
+api call example:
+
+Trello.get(
+    'organizations/' + organization.id + '/boards',
+    {
+        key: 'ad42f1ee6ea8f3fe9e31018b5f861536',
+        token: user_token,
+        filter: 'open',
+        fields: 'name,id'
+    },
+    function success() {
+        console.log(arguments)
+    },
+    function error() {}
+);

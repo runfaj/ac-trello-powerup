@@ -175,7 +175,19 @@ function onRender() {
             if(projects) projectList = projects;
             updateProjectList();
 
-            console.log('token', user_token, organization.id)
+            Trello.get(
+                'organizations/' + organization.id + '/members',
+                {
+                    key: 'ad42f1ee6ea8f3fe9e31018b5f861536',
+                    token: user_token,
+                    filter: 'open',
+                    fields: 'fullName,id'
+                },
+                function success() {
+                    console.log(arguments)
+                },
+                function error() {}
+            );
         })
         .then(function() {
             resetView();
