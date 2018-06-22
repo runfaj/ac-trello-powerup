@@ -405,7 +405,8 @@ TrelloPowerUp.initialize({
         return getListSorters(t, options);
     },
     'on-enable': function(t, options) {
-        return t.modal({url: './power-up-onboarding.html', height: 500, title: 'My Power-Up Overview'});
+        console.log('on enable')
+        return t.modal({url: 'settings.html', height: 500, title: 'My Power-Up Overview'});
     },
     'show-settings': function(t, options) {
         if (t.memberCanWriteToModel('organization'))
