@@ -4,67 +4,18 @@ var t = TrelloPowerUp.iframe();
 var projectList = [];
 var userList = [];
 
-t.render(function() {
-    t.organization('id').then(function(organization){
-        console.log('org',organization)
-    });
-
-    return Promise.all([
-            t.get('organization', 'shared', 'projects')
-        ])
-        .spread(function(projects) {
-            if(projects) projectList = projects;
-            updateProjectList();
-        })
-        .then(function() {
-            resetView();
-        })
-});
+t.render(onRender);
 
 /** buttons **/
-jQuery('.add-project').on('click',function(){
-    showProjectEditSection(true, -1);
-});
-jQuery('.project-save').on('click',function(){
-    var isAdding = jQuery('.selected-project').prop('adding');
-    var projectName = jQuery('.project-name').val();
-    var billingCode = jQuery('.billing-code').val();
-    var editingIdx = jQuery('.selected-project').attr('editing');
-
-    if(isAdding) {
-        var prevProj = projectList[projectList.length - 1];
-        projectList.push({
-            'id': prevProj ? prevProj.id + 1 : 1,
-            'name': projectName,
-            'code': billingCode
-        });
-    } else {
-        projectList[editingIdx].name = projectName;
-        projectList[editingIdx].code = billingCode;
-    }
-
-    saveProjectList();
-});
-jQuery('.project-delete').on('click',function(){
-    var editingIdx = jQuery('.selected-project').attr('editing');
-    projectList.splice(editingIdx, 1);
-    saveProjectList();
-});
-jQuery('.project-cancel').on('click',function(){
-    resetView();
-});
+jQuery('.add-project').on('click',onAddProject);
+jQuery('.project-save').on('click',onSaveProject);
+jQuery('.project-delete').on('click',onDeleteProject);
+jQuery('.project-cancel').on('click',resetView);
 
 /** inputs **/
-jQuery('.project-name').on('keyup change',function(){
-    setSaveDisabledState();
-});
-jQuery('.billing-code').on('keyup change',function(){
-    setSaveDisabledState();
-});
-jQuery('.projects').on('change',function(){
-    var idx = jQuery(this).val();
-    showProjectEditSection(false, idx);
-});
+jQuery('.project-name').on('keyup change',setSaveDisabledState);
+jQuery('.billing-code').on('keyup change',setSaveDisabledState);
+jQuery('.projects').on('change',onProjectChange);
 
 /** helpers **/
 function checkProjectValid() {
@@ -111,12 +62,14 @@ function updateProjectList() {
         var billingCode = projectList[i].code;
         select.append("<option value='"+i+"'>"+projectName+" ("+billingCode+")</option>");
     }
+
+    console.log('project list:',projectList);
 }
 function saveProjectList() {
     t.set('organization', 'shared', 'projects', projectList)
         .then(function(){
-            resetView();
             updateProjectList();
+            resetView();
         });
 }
 function showProjectEditSection(isAdding, editingIdx) {
@@ -147,7 +100,60 @@ function resetView() {
         .removeClass('show')
         .prop('adding', false)
         .attr('editing', '');
+    jQuery('.project-name').val('');
+    jQuery('.billing-code').val('');
+
     setTimeout(function(){
         t.sizeTo('#content').done();
     });
+}
+
+/** handlers **/
+function onSaveProject() {
+    var isAdding = jQuery('.selected-project').prop('adding');
+    var projectName = jQuery('.project-name').val();
+    var billingCode = jQuery('.billing-code').val();
+    var editingIdx = jQuery('.selected-project').attr('editing');
+
+    if(isAdding) {
+        var prevProj = projectList[projectList.length - 1];
+        projectList.push({
+            'id': prevProj ? prevProj.id + 1 : 1,
+            'name': projectName,
+            'code': billingCode
+        });
+    } else {
+        projectList[editingIdx].name = projectName;
+        projectList[editingIdx].code = billingCode;
+    }
+
+    saveProjectList();
+}
+function onAddProject() {
+    showProjectEditSection(true, -1);
+}
+function onDeleteProject() {
+    var editingIdx = jQuery('.selected-project').attr('editing');
+    projectList.splice(editingIdx, 1);
+    saveProjectList();
+}
+function onProjectChange() {
+    var idx = jQuery('.projects').val();
+    showProjectEditSection(false, idx);
+}
+function onRender() {
+    t.organization('id').then(function(organization){
+        console.log('org',organization)
+    });
+
+    return Promise.all([
+            t.get('organization', 'shared', 'projects')
+        ])
+        .spread(function(projects) {
+            if(projects) projectList = projects;
+            updateProjectList();
+        })
+        .then(function() {
+            resetView();
+        });
 }
