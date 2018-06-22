@@ -6,14 +6,12 @@ cards
     - priority: (blank == none), high, medium, low, backburner
         expected sorting: high, medium low, none, backburner
 
-member
-    - group: (blank == none), pm, designer, artist, programmer, writer
-
 board
     - project: id of project
 
 organization
     - projects: list of projects with keys: id, name, code (billing code)
+    - memberGroups: list of members with keys: id, fullName, username, group ((blank == none), pm, designer, artist, programmer, writer)
 
 
 (private)
