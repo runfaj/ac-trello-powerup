@@ -119,12 +119,11 @@ function checkAuth() {
                     name: 'Allencomm Trello power-up',
                     expiration: 'never',
                     success: function() {
-                        console.log(arguments)
-                        onRender();
+                        return t.set('member', 'private', 'user_token', localStorage.trello_token)
+                            .then(onRender);
                     },
                     error: function() {
-                        console.log(arguments)
-                        onRender();
+                        alert('Authorization failed. Please try again.')
                     }
                 });
             } else {
@@ -167,16 +166,19 @@ function onProjectChange() {
     showProjectEditSection(false, idx);
 }
 function onRender() {
-    t.organization('id').then(function(organization){
-        console.log('org',organization)
-    });
+    // t.organization('id').then(function(organization){
+    //     console.log('org',organization)
+    // });
 
     return Promise.all([
-            t.get('organization', 'shared', 'projects')
+            t.get('organization', 'shared', 'projects'),
+            t.get('member', 'private', 'user_token')
         ])
-        .spread(function(projects) {
+        .spread(function(projects, user_token) {
             if(projects) projectList = projects;
             updateProjectList();
+
+            console.log('token', user_token)
         })
         .then(function() {
             resetView();
