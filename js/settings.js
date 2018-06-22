@@ -213,7 +213,7 @@ function onRender() {
                             }
                         }
                         if(memberExists == -1) {
-                            memberGroups.push(data[i]);
+                            userList.push(data[i]);
                         }
                     }
                     //remove all stale members
