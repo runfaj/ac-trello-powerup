@@ -136,9 +136,7 @@ function showProjectEditSection(isAdding, editingIdx) {
             jQuery('.billing-code').val(projectList[editingIdx].code);
         }
 
-        setTimeout(function(){
-            t.sizeTo('#content').done();
-        ]);
+        t.sizeTo('#content').done();
     });
 }
 function resetView() {
