@@ -129,7 +129,6 @@ function checkAuth() {
                 onRender();
             }
         });
-    });
 };
 
 /** handlers **/
