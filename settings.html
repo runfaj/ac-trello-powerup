@@ -23,6 +23,10 @@
             display: block;
         }
 
+        .hide {
+            display: none;
+        }
+
         .add-project {
             font-size: 26px;
             padding: 6px 12px 4px 12px;
@@ -49,6 +53,8 @@
             <input type="text" class="billing-code" />
 
             <button class="mod-primary project-save" disabled="disabled">Save</button>
+            <button class="project-cancel">Cancel</button>
+            <button class="mod-danger project-delete">Delete</button>
         </div>
 
         <hr />
@@ -102,6 +108,8 @@
         jQuery('.projects').prop('disabled', true);
         jQuery('.add-project').prop('disabled', true);
         jQuery('.selected-project').addClass('show').prop('adding', true);
+        jQuery('.project-delete').addClass('hide');
+        t.sizeTo('#content').done();
     });
     jQuery('.project-save').on('click',function(){
         var isAdding = jQuery('.selected-project').prop('adding');
@@ -119,16 +127,12 @@
             projectList[editingIdx].code = billingCode;
         }
 
-        t.set('organization', 'shared', 'projects', projectList)
-            .then(function(){
-                jQuery('.projects').prop('disabled', false);
-                jQuery('.add-project').prop('disabled', false);
-                jQuery('.selected-project')
-                    .removeClass('show')
-                    .prop('adding', false)
-                    .attr('editing', '');
-                updateProjectList();
-            });
+        saveProjectList();
+    });
+    jQuery('.project-delete').on('click',function(){
+        var editingIdx = jQuery('.selected-project').attr('editing');
+        projectList.splice(editingIdx, 1);
+        saveProjectList();
     });
 
     /** inputs **/
@@ -143,16 +147,21 @@
         jQuery('.projects').prop('disabled', true);
         jQuery('.add-project').prop('disabled', true);
         jQuery('.selected-project').addClass('show').attr('editing', idx);
+        jQuery('.project-delete').removeClass('hide');
+        t.sizeTo('#content').done();
     });
 
     /** helpers **/
     function checkProjectValid() {
         var projectName = jQuery('.project-name').val();
         var billingCode = jQuery('.billing-code').val();
+        var isAdding = jQuery('.selected-project').prop('adding');
+        var editingIdx = jQuery('.selected-project').attr('editing');
 
         var nameExists = false;
         if(projectName) {
             for(var i=0;i<projectList.length;i++) {
+                if(!isAdding && editingIdx == i) continue;
                 if(projectName.toLowerCase() == projectList[i].name.toLowerCase())
                     nameExists = true;
             }
@@ -161,6 +170,7 @@
         var codeExists = false;
         if(projectName) {
             for(var i=0;i<projectList.length;i++) {
+                if(!isAdding && editingIdx == i) continue;
                 if(billingCode.toLowerCase() == projectList[i].code.toLowerCase())
                     codeExists = true;
             }
@@ -181,6 +191,18 @@
             var billingCode = projectList[i].code;
             select.append("<option value='"+i+"'>"+projectName+" ("+billingCode+")</option>");
         }
+    }
+    function saveProjectList() {
+        t.set('organization', 'shared', 'projects', projectList)
+            .then(function(){
+                jQuery('.projects').prop('disabled', false);
+                jQuery('.add-project').prop('disabled', false);
+                jQuery('.selected-project')
+                    .removeClass('show')
+                    .prop('adding', false)
+                    .attr('editing', '');
+                updateProjectList();
+            });
     }
 </script>
 
