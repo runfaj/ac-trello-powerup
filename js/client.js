@@ -93,7 +93,7 @@ var checkAuth = function(t, reloadAfter) {
         // });
 };
 if(document.cookie.indexOf('checkauth')>-1)
-    checkAuth(TrelloPowerUp.iframe());
+    checkAuth();
 
 var getBadges = function(t) {
     var priorityColors = {
