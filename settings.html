@@ -174,7 +174,7 @@
     }
     function updateProjectList() {
         var select = jQuery('.projects');
-        select.removeAll();
+        select.empty();
         select.appendChild("<option value='-1'></option>");
         for(var i=0;i<projectList.length;i++) {
             var projectName = projectList[i].name;
