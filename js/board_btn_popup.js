@@ -9,12 +9,12 @@ t.render(checkAuth);
 /** buttons **/
 jQuery('.auth-btn').on('click',checkAuth);
 jQuery('.item.settings').on('click',onSettingsClick);
-jQuery('.item.task.mine'.on('click',function(){alert('todo');});
-jQuery('.item.task.projects'.on('click',function(){alert('todo');});
-jQuery('.item.task.all'.on('click',function(){alert('todo');});
-jQuery('.item.hour.mine'.on('click',function(){alert('todo');});
-jQuery('.item.hour.board'.on('click',function(){alert('todo');});
-jQuery('.item.hour.group'.on('click',function(){alert('todo');});
+jQuery('.item.task.mine').on('click',function(){alert('todo');});
+jQuery('.item.task.projects').on('click',function(){alert('todo');});
+jQuery('.item.task.all').on('click',function(){alert('todo');});
+jQuery('.item.hour.mine').on('click',function(){alert('todo');});
+jQuery('.item.hour.board').on('click',function(){alert('todo');});
+jQuery('.item.hour.group').on('click',function(){alert('todo');});
 
 /** helpers **/
 function resetView() {
