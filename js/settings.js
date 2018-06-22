@@ -33,6 +33,7 @@ jQuery('.project-save').on('click',function(){
 
     if(isAdding)
         projectList.push({
+            'id': projectList[projectList.length - 1].id + 1,
             'name': projectName,
             'code': billingCode
         });
@@ -97,6 +98,11 @@ function setSaveDisabledState() {
 }
 function updateProjectList() {
     var select = jQuery('.projects');
+
+    projectList.sort(function(a,b){
+        return a.id - b.id;
+    });
+
     select.empty();
     select.append("<option value='-1'></option>");
     for(var i=0;i<projectList.length;i++) {
@@ -130,7 +136,9 @@ function showProjectEditSection(isAdding, editingIdx) {
             jQuery('.billing-code').val(projectList[editingIdx].code);
         }
 
-        t.sizeTo('#content').done();
+        setTimeout(function(){
+            t.sizeTo('#content').done();
+        ]);
     });
 }
 function resetView() {
