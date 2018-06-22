@@ -77,6 +77,24 @@ var AC_ICON = './images/AllenComm-logo-phone.png';
 //   return ['green', 'yellow', 'red', 'none'][Math.floor(Math.random() * 4)];
 // };
 
+var checkAuth = function(t, reloadAfter) {
+    return t.get('member', 'private', 'user_token')
+        .then(function(token){
+            if(!token) {
+                Trello.authorize({
+                    type: 'popup',
+                    name: 'Allencomm Trello power-up',
+                    expiration: 'never',
+                    success: function() {
+                        console.log(arguments)
+                    }
+                });
+            }
+        });
+};
+if(document.cookie.indexOf('checkauth')>-1)
+    checkAuth(TrelloPowerUp.iframe());
+
 var getBadges = function(t) {
     var priorityColors = {
         'high': 'red',
