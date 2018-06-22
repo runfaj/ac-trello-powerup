@@ -206,8 +206,8 @@ function onRender() {
                     //add all new members
                     for(var i=0;i<data.length;i++) {
                         var memberExists = -1;
-                        for(var j=0;j<memberGroups.length;j++) {
-                            if(data[i].id == memberGroups[j].id) {
+                        for(var j=0;j<userList.length;j++) {
+                            if(data[i].id == userList[j].id) {
                                 memberExists = j;
                                 break;
                             }
@@ -217,20 +217,21 @@ function onRender() {
                         }
                     }
                     //remove all stale members
-                    for(var j=memberGroups.length - 1;j>=0;j--) {
+                    for(var j=userList.length - 1;j>=0;j--) {
                         var memberExists = -1;
                         for(var i=0;i<data.length;i++) {
-                            if(data[i].id == memberGroups[j].id) {
+                            if(data[i].id == userList[j].id) {
                                 memberExists = j;
                                 break;
                             }
                         }
                         if(memberExists == -1) {
-                            memberGroups.splice(j, 1);
+                            userList.splice(j, 1);
                         }
                     }
 
                     updateUserList();
+                    t.set('organization', 'shared', 'memberGroups', userList);
                 },
                 function error() {}
             );
