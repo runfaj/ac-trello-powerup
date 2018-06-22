@@ -110,6 +110,7 @@ function resetView() {
 function checkAuth() {
     return t.get('member', 'private', 'user_token')
         .then(function(token){
+            debugger;
             if(!token) {
                 Trello.authorize({
                     type: 'redirect',
@@ -127,7 +128,7 @@ function checkAuth() {
             } else {
                 onRender();
             }
-        }
+        });
     });
 };
 
