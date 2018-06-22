@@ -78,9 +78,9 @@ var AC_ICON = './images/AllenComm-logo-phone.png';
 // };
 
 var checkAuth = function(t, reloadAfter) {
-    return t.get('member', 'private', 'user_token')
-        .then(function(token){
-            if(!token) {
+    // return t.get('member', 'private', 'user_token')
+    //     .then(function(token){
+    //         if(!token) {
                 Trello.authorize({
                     type: 'popup',
                     name: 'Allencomm Trello power-up',
@@ -89,8 +89,8 @@ var checkAuth = function(t, reloadAfter) {
                         console.log(arguments)
                     }
                 });
-            }
-        });
+        //     }
+        // });
 };
 if(document.cookie.indexOf('checkauth')>-1)
     checkAuth(TrelloPowerUp.iframe());
