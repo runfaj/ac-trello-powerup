@@ -31,13 +31,14 @@ jQuery('.project-save').on('click',function(){
     var billingCode = jQuery('.billing-code').val();
     var editingIdx = jQuery('.selected-project').attr('editing');
 
-    if(isAdding)
+    if(isAdding) {
+        var prevProj = projectList[projectList.length - 1];
         projectList.push({
-            'id': projectList[projectList.length - 1].id + 1,
+            'id': prevProj ? prevProj.id + 1 : 1,
             'name': projectName,
             'code': billingCode
         });
-    else {
+    } else {
         projectList[editingIdx].name = projectName;
         projectList[editingIdx].code = billingCode;
     }
