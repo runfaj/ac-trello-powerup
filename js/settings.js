@@ -179,9 +179,7 @@ function onRender() {
                 'organizations/' + organization.id + '/members',
                 {
                     key: 'ad42f1ee6ea8f3fe9e31018b5f861536',
-                    token: user_token,
-                    filter: 'open',
-                    fields: 'fullName,id'
+                    token: user_token
                 },
                 function success() {
                     console.log(arguments)
