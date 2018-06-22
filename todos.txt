@@ -18,6 +18,8 @@ My projects (boards i'm watching and in my group)
     all roles also can see the verify lists
 All projects (all projects and in my group)
 
+sorting should be based on priority tags for each card
+
 hours view
 ==========
 add custom field for estimated hours
