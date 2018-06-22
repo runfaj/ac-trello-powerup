@@ -82,10 +82,9 @@ var getBoardButtons = function(t, options) {
         .then(function(code){
             var btns = [
                 {
-                    // we can either provide a button that has a callback function
-                    // that callback function should probably open a popup, overlay, or boardBar
                     icon: AC_ICON,
                     text: 'Allencomm',
+                    condition: 'always',
                     callback: function(t) {
                         return t.popup({title: 'Allencomm Trello Power-up', url: './board_btn_popup.html'});
                     }
@@ -95,8 +94,9 @@ var getBoardButtons = function(t, options) {
             if(code)
                 btns.unshift({
                     text: code,
+                    condition: 'always',
                     callback: function(t) {
-                        return false;
+                        return t.popup({title: 'Allencomm Trello Power-up', url: './board_btn_popup.html'});
                     }
                 });
 

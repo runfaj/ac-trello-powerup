@@ -2,14 +2,8 @@ Todos
 
 settings
 ========
-need a setting to define what role a user is (pm, designer, etc)
-add setting for rates for each group
-need to have settings for lists of projects (client, project name, billing code)
+future: add setting for rates for each group
 future: need settings to define teams on a project (pm/design/AL/TL)
-
-misc boards
-===========
-add a assign to project setting, show the project info somewhere
 
 task list view
 ==============
@@ -28,7 +22,7 @@ Board tasks (all open tasks for a board)
 Group tasks (all open tasks for a group)
     filter by person
 future: My Team Tasks (all open tasks for my team)
-summary of hours per group with the associated cost of those hours
+future: summary of hours per group with the associated cost of those hours
     for selected date range
 
 
