@@ -15,3 +15,4 @@ board
 
 organization
     - user_token: saved user auth token
+        user will be forced to authorize before they can use the main features
