@@ -36,6 +36,10 @@
         .projects {
             width: calc(100% - 44px);
         }
+
+        select[disabled] {
+            background-color: #e4e4e4;
+        }
     </style>
 </head>
 
@@ -108,8 +112,10 @@
         jQuery('.projects').prop('disabled', true);
         jQuery('.add-project').prop('disabled', true);
         jQuery('.selected-project').addClass('show').prop('adding', true);
-        jQuery('.project-delete').addClass('hide');
-        t.sizeTo('#content').done();
+        setTimeout(function(){
+            jQuery('.project-delete').addClass('hide');
+            t.sizeTo('#content').done();
+        });
     });
     jQuery('.project-save').on('click',function(){
         var isAdding = jQuery('.selected-project').prop('adding');
@@ -134,6 +140,9 @@
         projectList.splice(editingIdx, 1);
         saveProjectList();
     });
+    jQuery('.project-cancel').on('click',function(){
+        resetView();
+    });
 
     /** inputs **/
     jQuery('.project-name').on('keyup change',function(){
@@ -147,7 +156,10 @@
         jQuery('.projects').prop('disabled', true);
         jQuery('.add-project').prop('disabled', true);
         jQuery('.selected-project').addClass('show').attr('editing', idx);
-        jQuery('.project-delete').removeClass('hide');
+        setTimeout(function(){
+            jQuery('.project-delete').removeClass('hide');
+            t.sizeTo('#content').done();
+        });
         t.sizeTo('#content').done();
     });
 
@@ -195,14 +207,20 @@
     function saveProjectList() {
         t.set('organization', 'shared', 'projects', projectList)
             .then(function(){
-                jQuery('.projects').prop('disabled', false);
-                jQuery('.add-project').prop('disabled', false);
-                jQuery('.selected-project')
-                    .removeClass('show')
-                    .prop('adding', false)
-                    .attr('editing', '');
+                resetView();
                 updateProjectList();
             });
+    }
+    function resetView() {
+        jQuery('.projects').prop('disabled', false);
+        jQuery('.add-project').prop('disabled', false);
+        jQuery('.selected-project')
+            .removeClass('show')
+            .prop('adding', false)
+            .attr('editing', '');
+        setTimeout(function(){
+            t.sizeTo('#content').done();
+        });
     }
 </script>
 
