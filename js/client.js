@@ -81,19 +81,17 @@ var checkAuth = function(t, reloadAfter) {
     // return t.get('member', 'private', 'user_token')
     //     .then(function(token){
     //         if(!token) {
-                Trello.authorize({
-                    type: 'popup',
-                    name: 'Allencomm Trello power-up',
-                    expiration: 'never',
-                    success: function() {
-                        console.log(arguments)
-                    }
-                });
-        //     }
-        // });
+    Trello.authorize({
+        type: 'popup',
+        name: 'Allencomm Trello power-up',
+        expiration: 'never',
+        success: function() {
+            console.log(arguments)
+        }
+    });
+    //     }
+    // });
 };
-if(document.cookie.indexOf('checkauth')>-1)
-    checkAuth();
 
 var getBadges = function(t) {
     var priorityColors = {
@@ -405,6 +403,9 @@ TrelloPowerUp.initialize({
     },
     'list-sorters': function(t, options) {
         return getListSorters(t, options);
+    },
+    'on-enable': function(t, options) {
+        return t.modal({url: './power-up-onboarding.html', height: 500, title: 'My Power-Up Overview'});
     },
     'show-settings': function(t, options) {
         if (t.memberCanWriteToModel('organization'))
