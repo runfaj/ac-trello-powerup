@@ -1,17 +1,14 @@
 This defines the custom keys being saved at each level for the custom powerup.
+Note - a max of 4096 characters is allowed per key.
 
 (shared)
 
-cards
+card
     - priority: (blank == none), high, medium, low, backburner
         expected sorting: high, medium low, none, backburner
 
 board
-    - project: id of project
-
-organization
-    - projects: list of projects with keys: id, name, code (billing code)
-    - memberGroups: list of members with keys: id, fullName, username, group ((blank == none), pm, designer, artist, programmer, writer)
+    - code: billing code
 
 
 (private)

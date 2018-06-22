@@ -1,0 +1,74 @@
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://p.trellocdn.com/power-up.min.js"></script>
+    <script src="https://trello.com/1/client.js?key=ad42f1ee6ea8f3fe9e31018b5f861536"></script>
+    <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css">
+    <style>
+        hr {
+            margin: 10px 0;
+        }
+        h4 {
+            margin-bottom: 0;
+            text-align: center;
+        }
+        button {
+            margin-right: .5em;
+        }
+        .regular-list {
+            display: none;
+        }
+        .selected-project {
+            display: none;
+        }
+        .selected-user {
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .add-project {
+            font-size: 26px;
+            padding: 6px 12px 4px 12px;
+            margin-right: 0;
+        }
+
+        .projects {
+            width: calc(100% - 44px);
+        }
+
+        select[disabled] {
+            background-color: #e4e4e4;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content">
+        <label>Board Billing Code:</label>
+        <input type="text" maxlength="100" class="billing-code" />
+
+        <label>I am a:</label>
+        <select class="groups">
+            <option value="none"></option>
+            <option value="pm">Project Manager</option>
+            <option value="designer">Designer</option>
+            <option value="artist">Artist</option>
+            <option value="programmer">Programmer</option>
+            <option value="writer">Writer</option>
+        </select>
+
+        <h4 class="message hide">Saved!</h4>
+    </div>
+</body>
+
+<script src="./js/board_settings.js"></script>
+
+</html>

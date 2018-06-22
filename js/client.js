@@ -392,12 +392,12 @@ TrelloPowerUp.initialize({
         console.log('on enable')
         return t.modal({url: 'settings.html', height: 500, title: 'My Power-Up Overview'});
     },
-    'show-settings': function(t, options) {
-        if (t.memberCanWriteToModel('organization'))
-            return t.popup({title: 'Allencomm Power-up Settings', url: './settings.html'});
-
-        return t.popup({title: 'Nothing to see here. Sorry.', items: []});
-    }
+    // 'show-settings': function(t, options) {
+    //     if (t.memberCanWriteToModel('organization'))
+    //         return t.popup({title: 'Allencomm Power-up Settings', url: './settings.html'});
+    //
+    //     return t.popup({title: 'Nothing to see here. Sorry.', items: []});
+    // }
     // 'card-from-url': function(t, options) {
     //    options.url has the url in question
     //    if we know cool things about that url we can give Trello a name and desc

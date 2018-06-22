@@ -20,7 +20,6 @@ jQuery('.projects').on('change',onProjectChange);
 
 /** helpers **/
 function checkProjectValid() {
-    var projectName = jQuery('.project-name').val();
     var billingCode = jQuery('.billing-code').val();
     var isAdding = jQuery('.selected-project').prop('adding');
     var editingIdx = jQuery('.selected-project').attr('editing');
