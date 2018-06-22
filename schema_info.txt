@@ -15,6 +15,8 @@ board
 organization
     - projects: list of projects with keys: id, name, code (billing code)
 
+
 (private)
 
-none currently
+organization
+    - user_token: saved user auth token

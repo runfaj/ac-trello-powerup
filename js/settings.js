@@ -4,7 +4,7 @@ var t = TrelloPowerUp.iframe();
 var projectList = [];
 var userList = [];
 
-t.render(onRender);
+t.render(checkAuth);
 
 /** buttons **/
 jQuery('.add-project').on('click',onAddProject);
@@ -107,6 +107,28 @@ function resetView() {
         t.sizeTo('#content').done();
     });
 }
+function checkAuth() {
+    return t.get('member', 'private', 'user_token')
+        .then(function(token){
+            if(!token) {
+                Trello.authorize({
+                    type: 'redirect',
+                    name: 'Allencomm Trello power-up',
+                    expiration: 'never',
+                    success: function() {
+                        console.log(arguments)
+                        onRender();
+                    },
+                    error: function() {
+                        console.log(arguments)
+                        onRender();
+                    }
+                });
+            else
+                onRender();
+        }
+    });
+};
 
 /** handlers **/
 function onSaveProject() {
