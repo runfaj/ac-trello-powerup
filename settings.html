@@ -52,37 +52,45 @@
 
 <body>
     <div id="content">
-        <h4>Projects</h4>
-        <select class="projects"></select>
-        <button class="add-project">+</button>
+        <div class="regular-view hide">
+            <h4>Projects</h4>
+            <select class="projects"></select>
+            <button class="add-project">+</button>
 
-        <div class="selected-project">
-            <label>Project Name:</label>
-            <input type="text" class="project-name" />
+            <div class="selected-project">
+                <label>Project Name:</label>
+                <input type="text" class="project-name" />
 
-            <label>Billing Code:</label>
-            <input type="text" class="billing-code" />
+                <label>Billing Code:</label>
+                <input type="text" class="billing-code" />
 
-            <button class="mod-primary project-save" disabled="disabled">Save</button>
-            <button class="project-cancel">Cancel</button>
-            <button class="mod-danger project-delete">Delete</button>
+                <button class="mod-primary project-save" disabled="disabled">Save</button>
+                <button class="project-cancel">Cancel</button>
+                <button class="mod-danger project-delete">Delete</button>
+            </div>
+
+            <hr />
+
+            <h4>Users</h4>
+            <select class="users"></select>
+
+            <div class="selected-user">
+                <label>User Group:</label>
+                <select class="groups">
+                    <option value="none"></option>
+                    <option value="pm">Project Manager</option>
+                    <option value="designer">Designer</option>
+                    <option value="artist">Artist</option>
+                    <option value="programmer">Programmer</option>
+                    <option value="writer">Writer</option>
+                </select>
+            </div>
         </div>
 
-        <hr />
-
-        <h4>Users</h4>
-        <select class="users"></select>
-
-        <div class="selected-user">
-            <label>User Group:</label>
-            <select class="groups">
-                <option value="none"></option>
-                <option value="pm">Project Manager</option>
-                <option value="designer">Designer</option>
-                <option value="artist">Artist</option>
-                <option value="programmer">Programmer</option>
-                <option value="writer">Writer</option>
-            </select>
+        <div class="auth-view">
+            <h4>You need to authorize first.</h4>
+            <p>The button below will open a popup. If you don't see it, try enabling popups on this page.</p>
+            <button class="mod-primary auth-btn">Authorize</button>
         </div>
     </div>
 </body>

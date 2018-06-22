@@ -7,6 +7,7 @@ var userList = [];
 t.render(checkAuth);
 
 /** buttons **/
+jQuery('.auth-btn').on('click',checkAuth);
 jQuery('.add-project').on('click',onAddProject);
 jQuery('.project-save').on('click',onSaveProject);
 jQuery('.project-delete').on('click',onDeleteProject);
@@ -94,6 +95,8 @@ function showProjectEditSection(isAdding, editingIdx) {
     });
 }
 function resetView() {
+    jQuery('.regular-view').removeClass('hide');
+    jQuery('.auth-view').addClass('hide');
     jQuery('.projects').prop('disabled', false);
     jQuery('.add-project').prop('disabled', false);
     jQuery('.selected-project')
@@ -110,10 +113,9 @@ function resetView() {
 function checkAuth() {
     return t.get('member', 'private', 'user_token')
         .then(function(token){
-            debugger;
             if(!token) {
                 Trello.authorize({
-                    type: 'redirect',
+                    type: 'popup',
                     name: 'Allencomm Trello power-up',
                     expiration: 'never',
                     success: function() {
