@@ -166,19 +166,16 @@ function onProjectChange() {
     showProjectEditSection(false, idx);
 }
 function onRender() {
-    // t.organization('id').then(function(organization){
-    //     console.log('org',organization)
-    // });
-
     return Promise.all([
             t.get('organization', 'shared', 'projects'),
-            t.get('member', 'private', 'user_token')
+            t.get('member', 'private', 'user_token'),
+            t.organization('id')
         ])
-        .spread(function(projects, user_token) {
+        .spread(function(projects, user_token, organization) {
             if(projects) projectList = projects;
             updateProjectList();
 
-            console.log('token', user_token)
+            console.log('token', user_token, organization.id)
         })
         .then(function() {
             resetView();
