@@ -77,6 +77,33 @@ var AC_ICON = './images/AllenComm-logo-phone.png';
 //   return ['green', 'yellow', 'red', 'none'][Math.floor(Math.random() * 4)];
 // };
 
+var getBoardButtons = function(t, options) {
+    return t.get('board', 'shared', 'code')
+        .then(function(code){
+            var btns = [
+                {
+                    // we can either provide a button that has a callback function
+                    // that callback function should probably open a popup, overlay, or boardBar
+                    icon: AC_ICON,
+                    text: 'Allencomm',
+                    callback: function(t) {
+                        return t.popup({title: 'Allencomm Trello Power-up', url: './board-btn-popup.html'});
+                    }
+                }
+            ];
+
+            if(code)
+                btns.unshift({
+                    text: code,
+                    callback: function(t) {
+                        return false;
+                    }
+                });
+
+            return btns;
+        });
+};
+
 var getBadges = function(t) {
     var priorityColors = {
         'high': 'red',
@@ -339,25 +366,7 @@ TrelloPowerUp.initialize({
     //    throw t.NotHandled();
     // },
     'board-buttons': function(t, options) {
-        return [
-            {
-                // we can either provide a button that has a callback function
-                // that callback function should probably open a popup, overlay, or boardBar
-                icon: AC_ICON,
-                text: 'Allencomm',
-                callback: function(t) {
-                    return t.popup({title: 'Allencomm Trello Power-up', url: './board-btn-popup.html'});
-                }
-            }
-            // , {
-            //    or we can also have a button that is just a simple url
-            //    clicking it will open a new tab at the provided url
-            //   icon: WHITE_ICON,
-            //   text: 'URL',
-            //   url: 'https://trello.com/inspiration',
-            //   target: 'Inspiring Boards'  optional target for above url
-            // }
-        ];
+        return getBoardButtons(t, options);
     },
     'card-badges': function(t, options) {
         return getBadges(t);

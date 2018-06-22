@@ -20,7 +20,7 @@ function onCodeChange() {
             .then(function(){
                 showMessage();
             });
-    },250);
+    },500);
 }
 function onGroupChange() {
     var val = jQuery('.groups').val();
