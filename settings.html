@@ -175,11 +175,11 @@
     function updateProjectList() {
         var select = jQuery('.projects');
         select.empty();
-        select.appendChild("<option value='-1'></option>");
+        select.append("<option value='-1'></option>");
         for(var i=0;i<projectList.length;i++) {
             var projectName = projectList[i].name;
             var billingCode = projectList[i].code;
-            select.appendChild("<option value='"+i+"'>"+projectName+" ("+billingCode+")</option>");
+            select.append("<option value='"+i+"'>"+projectName+" ("+billingCode+")</option>");
         }
     }
 </script>
