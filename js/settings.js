@@ -124,8 +124,9 @@ function checkAuth() {
                         onRender();
                     }
                 });
-            else
+            } else {
                 onRender();
+            }
         }
     });
 };
