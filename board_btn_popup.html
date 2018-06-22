@@ -31,6 +31,10 @@
         .show {
             display: block;
         }
+
+        .hide {
+            display: none;
+        }
     </style>
 </head>
 
@@ -38,48 +42,30 @@
     <div class="item-list">
         <div class="regular-view hide">
             <h4>Task View</h4>
-            <div class="item">My Tasks</div>
-            <div class="item">My Projects</div>
-            <div class="item">All Projects</div>
+            <div class="item tasks mine">My Tasks</div>
+            <div class="item tasks projects">My Projects</div>
+            <div class="item tasks all">All Projects</div>
 
             <hr />
 
             <h4>Hour View</h4>
-            <div class="item">My Tasks</div>
-            <div class="item">Board Tasks</div>
-            <div class="item">Group Tasks</div>
+            <div class="item hour mine">My Tasks</div>
+            <div class="item hour board">Board Tasks</div>
+            <div class="item hour group">Group Tasks</div>
 
             <hr class="last-separator" />
 
             <div class="item settings">Settings</div>
         </div>
 
-        <!--<div class="auth-view">
+        <div class="auth-view">
             <h4>You need to authorize first.</h4>
             <p>The button below will open a popup. If you don't see it, try enabling popups on this page.</p>
             <button class="mod-primary auth-btn">Authorize</button>
-        </div>-->
+        </div>
     </div>
 </body>
 
-<script>
-    var Promise = TrelloPowerUp.Promise;
-    var t = TrelloPowerUp.iframe();
-
-    t.render(function(){
-        if(t.memberCanWriteToModel('organization')) {
-            jQuery('.last-separator').addClass('show');
-            jQuery('.item.settings').addClass('show');
-        }
-
-        //resize popup to fit items
-        t.sizeTo('.item-list').done();
-
-    });
-
-    jQuery('.item.settings').on('click',function(){
-        return t.popup({title: 'Allencomm Power-up Settings', url: './board_settings.html'});
-    });
-</script>
+<script src="./js/board_btn_popup.js"></script>
 
 </html>

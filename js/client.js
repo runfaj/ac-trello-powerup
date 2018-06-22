@@ -87,7 +87,7 @@ var getBoardButtons = function(t, options) {
                     icon: AC_ICON,
                     text: 'Allencomm',
                     callback: function(t) {
-                        return t.popup({title: 'Allencomm Trello Power-up', url: './board-btn-popup.html'});
+                        return t.popup({title: 'Allencomm Trello Power-up', url: './board_btn_popup.html'});
                     }
                 }
             ];
@@ -124,7 +124,7 @@ var getBadges = function(t) {
                     }),
                     color: priorityColors[data.priority],
                     callback: function(t) {
-                        return t.popup({title: 'Card Priority', url: './priority-popup.html'});
+                        return t.popup({title: 'Card Priority', url: './priority_popup.html'});
                     }
                 }
             ];
@@ -379,7 +379,7 @@ TrelloPowerUp.initialize({
                 icon: GRAY_ICON, // don't use a colored icon here
                 text: 'Priority',
                 callback: function(t) {
-                    return t.popup({title: 'Card Priority', url: './priority-popup.html'});
+                    return t.popup({title: 'Card Priority', url: './priority_popup.html'});
                 }
             }
             // , {
@@ -397,10 +397,10 @@ TrelloPowerUp.initialize({
     'list-sorters': function(t, options) {
         return getListSorters(t, options);
     },
-    'on-enable': function(t, options) {
-        console.log('on enable')
-        return t.modal({url: 'settings.html', height: 500, title: 'My Power-Up Overview'});
-    },
+    // 'on-enable': function(t, options) {
+    //     console.log('on enable')
+    //     return t.modal({url: 'settings.html', height: 500, title: 'My Power-Up Overview'});
+    // },
     // 'show-settings': function(t, options) {
     //     if (t.memberCanWriteToModel('organization'))
     //         return t.popup({title: 'Allencomm Power-up Settings', url: './settings.html'});
