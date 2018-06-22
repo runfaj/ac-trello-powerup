@@ -1,0 +1,20 @@
+This defines the custom keys being saved at each level for the custom powerup.
+
+(shared)
+
+cards
+    - priority: (blank == none), high, medium, low, backburner
+        expected sorting: high, medium low, none, backburner
+
+member
+    - group: (blank == none), pm, designer, artist, programmer, writer
+
+board
+    - project: id of project
+
+organization
+    - projects: list of projects with keys: id, name, code (billing code)
+
+(private)
+
+none currently
