@@ -15,6 +15,7 @@ jQuery('.item.tasks.all').on('click',function(){alert('todo');});
 jQuery('.item.hour.mine').on('click',function(){alert('todo');});
 jQuery('.item.hour.board').on('click',function(){alert('todo');});
 jQuery('.item.hour.group').on('click',function(){alert('todo');});
+jQuery('.info-icon').on('click',onTipClick);
 
 /** helpers **/
 function resetView() {
@@ -109,4 +110,11 @@ function onRender() {
     //         resetView();
     //     });
     resetView();
+}
+function onTipClick(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    var tip = jQuery(this);
+    alert(tip.attr('text'));
 }
