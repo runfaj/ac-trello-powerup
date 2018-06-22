@@ -125,7 +125,7 @@ function showProjectEditSection(isAdding, editingIdx) {
     if(isAdding) {
         jQuery('.selected-project').prop('adding', true);
     } else {
-        jQuery('.selected-project').attr('editing', idx);
+        jQuery('.selected-project').attr('editing', editingIdx);
     }
     setTimeout(function(){
         if(isAdding)
