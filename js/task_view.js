@@ -6,6 +6,12 @@ this.getBoards();
 
 console.log("boards", this.boards);
 
+ for(var i = 0; i < this.boards.length; i++)
+{
+	this.getLists(this.boards[i]);
+	console.log('list ' + i);
+}
+
 function getLists(board){
 	return Promise.all([
             t.get('member', 'private', 'user_token'),
@@ -45,11 +51,6 @@ function getBoards() {
                 function success(data, responseText, xhr) {
                     console.log('json data:', data)
                     this.boards = data;
-                     for(var i = 0; i < data.length; i++)
-					{
-						this.getLists(data[i]);
-						console.log('list ' + i);
-					}
                 },
                 function error() {}
             );
