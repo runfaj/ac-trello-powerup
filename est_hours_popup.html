@@ -5,7 +5,7 @@
     <script src="https://p.trellocdn.com/power-up.min.js"></script>
     <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css">
     <style>
-        .error {
+        input.hours.error {
             border: 2px solid #eb5a46;
         }
     </style>
@@ -37,8 +37,6 @@
 
     //handle change
     jQuery('.hours').on('change keyup',function(){
-        jQuery('.hours').removeClass('error');
-
         window.clearTimeout(currTimeout);
         currTimeout = setTimeout(function(){
             var el = jQuery('.hours');
@@ -46,7 +44,10 @@
 
             if(isNaN(val)) {
                 el.addClass('error');
+                t.sizeTo('.content').done();
             } else {
+                jQuery('.hours').removeClass('error');
+                t.sizeTo('.content').done();
                 t.set('card', 'shared', 'hours', val);
             }
         },500);
