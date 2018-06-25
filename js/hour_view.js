@@ -86,7 +86,9 @@ initialize(function(){
     }
 
     while(!doneLoading) {
-        console.log('boards', boards)
-        console.log('lists', boardLists);
+        //waiting
     }
+
+    console.log('boards', boards)
+    console.log('lists', boardLists);
 });
