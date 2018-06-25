@@ -36,7 +36,7 @@ function getBoards(callback) {
     );
 }
 
-function getListsInBoard(boardId, includeArchived) {
+function getListsInBoard(boardId, callback, includeArchived) {
     Trello.get(
         'boards/' + boardId + '/lists',
         {
