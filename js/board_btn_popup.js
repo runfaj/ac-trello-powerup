@@ -9,14 +9,12 @@ t.render(checkAuth);
 /** buttons **/
 jQuery('.auth-btn').on('click',checkAuth);
 jQuery('.item.settings').on('click',onSettingsClick);
-jQuery('.item.tasks.mine').on('click',function(){
-    return t.popup({title: 'My tasks', url: './mytasks.html'});
-});
-jQuery('.item.tasks.projects').on('click',function(){alert('todo');});
-jQuery('.item.tasks.all').on('click',function(){alert('todo');});
-jQuery('.item.hour.mine').on('click',function(){alert('todo');});
-jQuery('.item.hour.board').on('click',function(){alert('todo');});
-jQuery('.item.hour.group').on('click',function(){alert('todo');});
+jQuery('.item.tasks.mine').on('click',openTaskView.bind(null, 'mine', 'My Tasks'));
+jQuery('.item.tasks.projects').on('click',openTaskView.bind(null, 'projects', 'My Projects'));
+jQuery('.item.tasks.all').on('click',openTaskView.bind(null, 'all', 'All Projects'));
+jQuery('.item.hour.mine').on('click',openHourView.bind(null, 'mine', 'My Tasks'));
+jQuery('.item.hour.board').on('click',openHourView.bind(null, 'board', 'Board Tasks'));
+jQuery('.item.hour.group').on('click',openHourView.bind(null, 'group', 'Group Tasks'));
 jQuery('.info-icon').on('click',onTipClick);
 
 /** helpers **/
@@ -49,6 +47,34 @@ function checkAuth() {
             }
         });
 };
+function openTaskView(scope, prettyScope) {
+    var modalHeight = jQuery(document).height() - 48 - 24;
+
+    t.modal({
+        url: './task_view.html',
+        accentColor: '#d46128',
+        fullscreen: false,
+        height: modalHeight,
+        title: 'Task View: ' + prettyScope,
+        args: {
+            scope: scope
+        }
+    });
+}
+function openHourView(scope, prettyScope) {
+    var modalHeight = jQuery(document).height() - 48 - 24;
+
+    t.modal({
+        url: './hour_view.html',
+        accentColor: '#d46128',
+        fullscreen: false,
+        height: modalHeight,
+        title: 'Hour View: ' + prettyScope,
+        args: {
+            scope: scope
+        }
+    });
+}
 
 /** handlers **/
 function onSettingsClick() {
@@ -117,7 +143,7 @@ function onRender() {
 function onTipClick(e) {
     e.preventDefault();
     e.stopPropagation();
-    
+
     var tip = jQuery(this);
     alert(tip.attr('text'));
 }

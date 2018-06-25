@@ -113,12 +113,7 @@ var getBadges = function(t) {
     };
 
     return t.get('card', 'shared').then(function(data) {
-        var list = [{
-            text: 'Hours: ' + (data.hours || 0),
-            callback: function(t) {
-                return t.popup({title: 'Estimated Hours', url: './est_hours_popup.html'});
-            }
-        }];
+        var list = [];
 
         if (data.priority)
             list.push({
@@ -131,6 +126,13 @@ var getBadges = function(t) {
                     return t.popup({title: 'Card Priority', url: './priority_popup.html'});
                 }
             });
+
+        list.push({
+            text: 'Hours: ' + (data.hours || 0),
+            callback: function(t) {
+                return t.popup({title: 'Estimated Hours', url: './est_hours_popup.html'});
+            }
+        });
 
         return list;
     });
