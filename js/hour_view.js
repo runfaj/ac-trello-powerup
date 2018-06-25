@@ -90,12 +90,10 @@ initialize(function(){
             setTimeout(waitForData.bind(null, timeLeft - 100));
         else
             doneLoading = true;
+
+        if(doneLoading) {
+            console.log('boards', boards)
+            console.log('lists', boardLists);
+        }
     })(12000);
-
-    while(!doneLoading) {
-        //waiting
-    }
-
-    console.log('boards', boards)
-    console.log('lists', boardLists);
 });
