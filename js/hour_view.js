@@ -70,13 +70,11 @@ function getLists() {
             setTimeout(waitForAllLists.bind(null, timeLeft-100), 100);
     }
 
-    for(var i=0;i<boards.length;i++) {
-        var board = boards[i];
-
+    boards.forEach(function(board, i){
         getListsInBoard(board.id, function(data){
             boardLists[i] = data;
         });
-    }
+    });
 
     waitForAllLists(10000);
 }
@@ -103,15 +101,12 @@ function getOpenLists(includeVerify) {
         nameList.push('verify');
         nameList.push('verification');
     }
-    var filtered = [];
 
     //filter out any non-open lists
-    for(var b=0;b<boardLists.length;b++) {
-        var board = boardLists[b];
+    return boardLists.map(function(board, b){
         var out = [];
 
-        for(var i=0;i<board.length;i++) {
-            var list = board[i];
+        board.forEach(function(list, i){
             var name = list.name.toLowerCase();
 
             for(var j=0;j<nameList.length;j++) {
@@ -122,12 +117,10 @@ function getOpenLists(includeVerify) {
                     continue;
                 }
             }
-        }
+        });
 
-        filtered.push(out);
-    }
-
-    return filtered;
+        return out;
+    });
 }
 
 
