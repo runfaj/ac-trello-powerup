@@ -68,6 +68,8 @@ function getLists() {
     /** initializes getting lists for each board
         also tracks when done loading **/
 
+    doneLoading = false;
+
     function waitForAllLists(timeLeft) {
         if(boardListsLoaded.every(function(b){return b;}) || timeLeft <= 0)
             doneLoading = true;
@@ -78,8 +80,8 @@ function getLists() {
     boards.forEach(function(board, i){
         boardListsLoaded.push(false);
         getListsInBoard(board.id, function(data){
-            boardListsLoaded[i] = true;
             boards[i].lists = data;
+            boardListsLoaded[i] = true;
         });
     });
 
