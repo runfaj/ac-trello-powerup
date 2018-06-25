@@ -16,7 +16,6 @@ sorting should be based on priority tags for each card
 
 hours view
 ==========
-add custom field for estimated hours
 My tasks (everything open, assigned to me)
 Board tasks (all open tasks for a board)
 Group tasks (all open tasks for a group)
