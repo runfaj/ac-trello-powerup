@@ -56,7 +56,7 @@ function getListsInBoard(boardId, openOnly, includeArchived) {
 
 function getLists() {
     function waitForAllLists(timeLeft) {
-        if(boardLists.length === boards.length)
+        if(boardLists.length === boards.length || timeLeft <= 0)
             doneLoading = true;
         else
             setTimeout(waitForAllLists.bind(null, timeLeft-100), 100);
@@ -84,6 +84,13 @@ initialize(function(){
                 getLists();
             });
     }
+
+    (function waitForData(timeLeft) {
+        if(!doneLoading && timeLeft > 0)
+            setTimeout(waitForData.bind(null, timeLeft - 100));
+        else
+            doneLoading = true;
+    })(12000);
 
     while(!doneLoading) {
         //waiting
