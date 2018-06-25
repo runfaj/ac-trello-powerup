@@ -15,4 +15,9 @@ xhr.open("GET", "https://api.trello.com/1/organizations/id/actions");
 
 xhr.send(data);
 
+console.log('scope');
+console.log(t.arg('scope'));
+console.log('Data');
 console.log(data);
+
+
