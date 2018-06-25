@@ -113,21 +113,24 @@ var getBadges = function(t) {
     };
 
     return t.get('card', 'shared').then(function(data) {
-        var list = [];
+        var list = [{
+            text: 'Est. Hours: ' + (data.hours || 0),
+            callback: function(t) {
+                return t.popup({title: 'Estimated Hours', url: './est_hours_popup.html'});
+            }
+        }];
 
         if (data.priority)
-            return [
-                {
-                    //icon: GRAY_ICON,
-                    text: data.priority.replace(/\w\S*/g, function(txt) {
-                        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-                    }),
-                    color: priorityColors[data.priority],
-                    callback: function(t) {
-                        return t.popup({title: 'Card Priority', url: './priority_popup.html'});
-                    }
+            list.push({
+                //icon: GRAY_ICON,
+                text: data.priority.replace(/\w\S*/g, function(txt) {
+                    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+                }),
+                color: priorityColors[data.priority],
+                callback: function(t) {
+                    return t.popup({title: 'Card Priority', url: './priority_popup.html'});
                 }
-            ];
+            });
 
         return list;
     });

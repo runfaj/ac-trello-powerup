@@ -1,0 +1,46 @@
+<html>
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://p.trellocdn.com/power-up.min.js"></script>
+    <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css">
+    <style>
+
+    </style>
+</head>
+
+<body>
+    <div class="content">
+        <input type="number" class="hours" placeholder="Hours (e.g. 0.5)" />
+    </div>
+</body>
+
+<script>
+    var Promise = TrelloPowerUp.Promise;
+    var t = TrelloPowerUp.iframe();
+
+    var currTimeout = null;
+
+    t.render(function(){
+        //resize popup to fit items
+        t.sizeTo('.content').done();
+
+        //get existing setting
+        t.get('card', 'shared', 'hours')
+            .then(function(hours) {
+                if(!hours) hours = 0;
+                jQuery('.hours').val(hours);
+            });
+    });
+
+    //handle change
+    jQuery('.hours').on('change keyup',function(){
+        window.clearTimeout(currTimeout);
+        currTimeout = setTimeout(function(){
+            var val = jQuery('.hours').val();
+            t.set('card', 'shared', 'hours', val);
+        },750);
+    });
+</script>
+
+</html>

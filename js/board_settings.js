@@ -12,10 +12,9 @@ jQuery('.groups').on('change',onGroupChange);
 
 /** helpers **/
 function onCodeChange() {
-    var val = jQuery('.billing-code').val();
-
     window.clearTimeout(currTimeout);
     currTimeout = setTimeout(function(){
+        var val = jQuery('.billing-code').val();
         t.set('board', 'shared', 'code', val)
             .then(function(){
                 showMessage();

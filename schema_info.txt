@@ -6,6 +6,7 @@ Note - a max of 4096 characters is allowed per key.
 card
     - priority: (blank == none), high, medium, low, backburner
         expected sorting: high, medium low, none, backburner
+    - hours: <a number>
 
 board
     - code: billing code
