@@ -76,6 +76,7 @@ function openHourView(scope, prettyScope) {
 function onSettingsClick() {
     return t.popup({title: 'Allencomm Power-up Settings', url: './board_settings.html'});
 }
+
 function onRender() {
     // return Promise.all([
     //         t.get('organization', 'shared', 'projects'),
