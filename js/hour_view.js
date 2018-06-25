@@ -77,7 +77,7 @@ function getOpenLists(includeVerify) {
         'pm',
         'project manager',
         'program manager',
-        'design'
+        'design',
         'writer',
         'qc',
         'quality control',
