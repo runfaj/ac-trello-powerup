@@ -117,19 +117,21 @@ function getOpenLists(includeVerify) {
             lists: []
         };
 
+        if(board.name === 'PGA')
+            debugger;
+
         //for each board, loop through lists
         (board.lists || []).forEach(function(list, i){
             var name = list.name.toLowerCase();
 
             //loop through all valid names above
             for(var j=0;j<nameList.length;j++) {
-                debugger;
                 var f = nameList[j];
 
                 if(name.indexOf(f) > -1) {
                     //if list name in valid name, add list to output
                     out.lists.push(list);
-                    continue;
+                    break;
                 }
             }
         });
