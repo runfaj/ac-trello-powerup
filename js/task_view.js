@@ -11,13 +11,13 @@ xhr.addEventListener("readystatechange", function () {
   }
 });
 
-xhr.open("GET", "https://api.trello.com/1/organizations/id/actions");
+xhr.open("GET", "https://api.trello.com/1/organizations/allencommcw");
 
 xhr.send(data);
 
-console.log('scope');
-console.log(t.arg('scope'));
-console.log('Data');
-console.log(data);
+console.log('scope:', t.arg('scope'));
+
+console.log('Data', data);
+
 
 
