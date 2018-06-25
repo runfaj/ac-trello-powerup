@@ -72,7 +72,7 @@ function getLists() {
         also tracks when done loading **/
 
     function waitForAllLists(timeLeft) {
-        if(boardLists.length === boards.length || timeLeft <= 0)
+        if(board.lists.length === boards.length || timeLeft <= 0)
             doneLoading = true;
         else
             setTimeout(waitForAllLists.bind(null, timeLeft-100), 100);
