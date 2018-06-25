@@ -1,8 +1,8 @@
 function getBoards() {
-    return Promise.all(
-            t.get('member', 'private', 'user_token')
+    return Promise.all([
+            t.get('member', 'private', 'user_token'),
             t.organization('id')
-        )
+        ])
         .spread(function(user_token, organizations) {
             Trello.get(
                 'organizations/' + organizations[0].id + '/boards',
@@ -17,7 +17,7 @@ function getBoards() {
                 },
                 function error() {}
             );
-    });
+        });
 }
 
 getBoards();
