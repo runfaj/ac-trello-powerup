@@ -52,7 +52,7 @@ function openTaskView(scope, prettyScope) {
         url: './task_view.html',
         accentColor: '#d46128',
         fullscreen: false,
-        height: '100%',
+        height: 500,
         title: 'Task View: ' + prettyScope,
         args: {
             scope: scope
@@ -64,7 +64,7 @@ function openHourView(scope, prettyScope) {
         url: './hour_view.html',
         accentColor: '#d46128',
         fullscreen: false,
-        height: '100%',
+        height: 500,
         title: 'Hour View: ' + prettyScope,
         args: {
             scope: scope
