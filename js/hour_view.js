@@ -71,16 +71,19 @@ function getLists() {
     doneLoading = false;
 
     function waitForAllLists(timeLeft) {
-        if(boardListsLoaded.every(function(b){return b;}) || timeLeft <= 0)
+        if(boardListsLoaded.every(function(b){return b;}) || timeLeft <= 0) {
             doneLoading = true;
-        else
+            console.log('done loading')
+        } else {
             setTimeout(waitForAllLists.bind(null, timeLeft-100), 100);
+        }
     }
 
     boards.forEach(function(board, i){
         boardListsLoaded.push(false);
         getListsInBoard(board.id, function(data){
             boards[i].lists = data;
+            console.log('list loaded:', boards[i].name)
             boardListsLoaded[i] = true;
         });
     });
@@ -88,6 +91,7 @@ function getLists() {
     waitForAllLists(10000);
 }
 function getOpenLists(includeVerify) {
+    console.log('get open lists');
     /** gets open lists across all boards **/
 
     var nameList = [
