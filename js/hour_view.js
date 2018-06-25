@@ -103,17 +103,21 @@ function getOpenLists(includeVerify) {
     }
 
     //filter out any non-open lists
+    //loop through boards
     return boardLists.map(function(board, b){
         var out = [];
 
+        //for each board, loop through lists
         board.forEach(function(list, i){
             var name = list.name.toLowerCase();
 
+            //loop through all valid names above
             for(var j=0;j<nameList.length;j++) {
                 var f = nameList[i];
 
                 if(name.indexOf(f) > -1) {
-                    out.push(data[i]);
+                    //if list name in valid name, add list to output
+                    out.push(list);
                     continue;
                 }
             }
@@ -140,9 +144,10 @@ initialize(function(){
 
     (function waitForData(timeLeft) {
         if(doneLoading || timeLeft <= 0) {
-            console.log('boards', boards);
-            console.log('lists', boardLists);
-            console.log('open lists', getOpenLists());
+            console.log(boards.length, 'boards', boards);
+            console.log(boardLists.length, 'lists', boardLists);
+            var openLists = getOpenLists();
+            console.log(openList.length, 'open lists', openLists);
         } else {
             setTimeout(waitForData.bind(null, timeLeft - 100));
         }
