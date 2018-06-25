@@ -92,6 +92,7 @@ function getOpenLists(includeVerify) {
 
     var nameList = [
         'new',
+        'bugs',
         'pm',
         'project manager',
         'program manager',
@@ -118,9 +119,6 @@ function getOpenLists(includeVerify) {
             name: board.name,
             lists: []
         };
-
-        if(board.name === 'PGA')
-            debugger;
 
         //for each board, loop through lists
         (board.lists || []).forEach(function(list, i){
