@@ -8,6 +8,8 @@ var boardLists = [];
 var doneLoading = false;
 
 function initialize(callback) {
+    /** initialize by getting user token and org id **/
+
     return Promise.all([
             t.get('member', 'private', 'user_token'),
             t.organization('id')
@@ -21,6 +23,8 @@ function initialize(callback) {
 }
 
 function getBoards(callback) {
+    /** get all boards for organization **/
+
     Trello.get(
         'organizations/' + organizationId + '/boards',
         {
@@ -37,6 +41,8 @@ function getBoards(callback) {
 }
 
 function getListsInBoard(boardId, callback, includeArchived) {
+    /** for a board, get all lists **/
+
     Trello.get(
         'boards/' + boardId + '/lists',
         {
@@ -63,6 +69,9 @@ function getListsInBoard(boardId, callback, includeArchived) {
 // &fields=all
 
 function getLists() {
+    /** initializes getting lists for each board
+        also tracks when done loading **/
+
     function waitForAllLists(timeLeft) {
         if(boardLists.length === boards.length || timeLeft <= 0)
             doneLoading = true;
@@ -128,7 +137,9 @@ function getOpenLists(includeVerify) {
 }
 
 
+// start getting data
 initialize(function(){
+    //compile list of boards (either 1 or many)
     if(scope != 'board') {
         getBoards(function(data){
             boards = data;
@@ -142,6 +153,7 @@ initialize(function(){
             });
     }
 
+    //wait for all the list data to be retrived before continuing
     (function waitForData(timeLeft) {
         if(doneLoading || timeLeft <= 0) {
             console.log(boards.length, 'boards', boards);
