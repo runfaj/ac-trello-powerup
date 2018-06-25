@@ -1,16 +1,12 @@
 var Promise = TrelloPowerUp.Promise;
 var t = TrelloPowerUp.iframe();
 
-let boards = null;
+this.boards = null;
 this.getBoards();
 
-console.log("boards", boards);
+console.log("boards", this.boards);
 
-for(var i = 0; i < boards.length; i++)
-{
-	this.getLists(boards[i]);
-	console.log('list ' + i);
-}
+
 
 function getBoards() {
     return Promise.all([
@@ -28,7 +24,12 @@ function getBoards() {
                 },
                 function success(data, responseText, xhr) {
                     console.log('json data:', data)
-                    boards = data;
+                    this.boards = data;
+                     for(var i = 0; i < data.length; i++)
+					{
+						this.getLists(data[i]);
+						console.log('list ' + i);
+					}
                 },
                 function error() {}
             );
