@@ -6,9 +6,9 @@ function getBoards() {
             t.get('member', 'private', 'user_token'),
             t.organization('id')
         ])
-        .spread(function(user_token, organizations) {
+        .spread(function(user_token, organization) {
             Trello.get(
-                'organizations/' + organizations[0].id + '/boards',
+                'organizations/' + organization.id + '/boards',
                 {
                     key: 'ad42f1ee6ea8f3fe9e31018b5f861536',
                     token: user_token,
