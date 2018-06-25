@@ -5,7 +5,9 @@
     <script src="https://p.trellocdn.com/power-up.min.js"></script>
     <link rel="stylesheet" href="https://p.trellocdn.com/power-up.min.css">
     <style>
-        input.hours.error {
+        input[type=number].error,
+        input[type="number"].error:not([disabled]):hover,
+        input[type="number"].error:not([disabled]):focus, {
             border: 2px solid #eb5a46;
         }
     </style>
