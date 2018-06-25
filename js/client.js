@@ -114,7 +114,7 @@ var getBadges = function(t) {
 
     return t.get('card', 'shared').then(function(data) {
         var list = [{
-            text: 'Est. Hours: ' + (data.hours || 0),
+            text: 'Hours: ' + (data.hours || 0),
             callback: function(t) {
                 return t.popup({title: 'Estimated Hours', url: './est_hours_popup.html'});
             }
