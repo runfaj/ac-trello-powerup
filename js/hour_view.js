@@ -1,27 +1,33 @@
 var Promise = TrelloPowerUp.Promise;
 var t = TrelloPowerUp.iframe();
 
-var token, organizationId;
+/** args from parent **/
 var scope = t.arg('scope');
-var boards = [];
-var boardListsLoaded = [];
-var doneLoading = false;
 
+/** state variables **/
+var token, organizationId;
+var doneLoading = false;
+var boardListsLoaded = [];
+
+/** data variables **/
+var boards = [];
+var filteredBoards = [];
+
+/*************** utils ****************/
 function initialize(callback) {
     /** initialize by getting user token and org id **/
 
     return Promise.all([
-            t.get('member', 'private', 'user_token'),
-            t.organization('id')
-        ])
-        .spread(function(user_token, organization) {
-            token = user_token;
-            organizationId = organization.id;
+        t.get('member', 'private', 'user_token'),
+        t.organization('id')
+    ])
+    .spread(function(user_token, organization) {
+        token = user_token;
+        organizationId = organization.id;
 
-            if(callback) callback();
-        });
+        if(callback) callback();
+    });
 }
-
 function getBoards(callback) {
     /** get all boards for organization **/
 
@@ -39,7 +45,6 @@ function getBoards(callback) {
         function error() {}
     );
 }
-
 function getListsInBoard(boardId, callback, includeArchived) {
     /** for a board, get all lists **/
 
@@ -59,15 +64,6 @@ function getListsInBoard(boardId, callback, includeArchived) {
         function error() {}
     );
 }
-
-// https://api.trello.com/1/boards/5b0d6fe552a76d056b9bf3b1/lists
-// ?key=ad42f1ee6ea8f3fe9e31018b5f861536
-// &token=c23b664d731e406dbab0c3ee41546587d48e1f3de80763e06841f54e84d14851
-// &filter=open
-// &cards=open
-// &card_fields=all
-// &fields=all
-
 function getLists() {
     /** initializes getting lists for each board
         also tracks when done loading **/
@@ -89,7 +85,6 @@ function getLists() {
 
     waitForAllLists(10000);
 }
-
 function getOpenLists(includeVerify) {
     /** gets open lists across all boards **/
 
@@ -144,28 +139,31 @@ function getOpenLists(includeVerify) {
 
 
 // start getting data
-initialize(function(){
-    //compile list of boards (either 1 or many)
-    if(scope != 'board') {
-        getBoards(function(data){
-            boards = data;
-            getLists();
-        });
-    } else {
-        t.board('id','name')
-            .then(function(board){
-                boards.push(board);
+t.render(function(){
+    return initialize(function(){
+        //compile list of boards (either 1 or many)
+        if(scope != 'board') {
+            getBoards(function(data){
+                boards = data;
                 getLists();
             });
-    }
-
-    //wait for all the list data to be retrived before continuing
-    (function waitForData(timeLeft) {
-        if(doneLoading || timeLeft <= 0) {
-            console.log('boards', boards);
-            console.log('open lists', getOpenLists());
         } else {
-            setTimeout(waitForData.bind(null, timeLeft - 100));
+            t.board('id','name')
+                .then(function(board){
+                    boards.push(board);
+                    getLists();
+                });
         }
-    })(12000);
+
+        //wait for all the list data to be retrived before continuing
+        (function waitForData(timeLeft) {
+            if(doneLoading || timeLeft <= 0) {
+                console.log('boards', boards);
+                filteredBoards = getOpenLists();
+                console.log('open lists', filteredBoards);
+            } else {
+                setTimeout(waitForData.bind(null, timeLeft - 100));
+            }
+        })(12000);
+    });
 });
