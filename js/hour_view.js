@@ -160,7 +160,6 @@ initialize(function(){
     (function waitForData(timeLeft) {
         if(doneLoading || timeLeft <= 0) {
             console.log('boards', boards);
-            console.log('lists', boardLists);
             console.log('open lists', getOpenLists());
         } else {
             setTimeout(waitForData.bind(null, timeLeft - 100));
