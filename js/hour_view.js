@@ -5,6 +5,7 @@ var token, organizationId;
 var scope = t.arg('scope');
 var boards = [];
 var boardLists = [];
+var doneLoading = false;
 
 function initialize(callback) {
     return Promise.all([
@@ -53,31 +54,39 @@ function getListsInBoard(boardId, openOnly, includeArchived) {
     );
 }
 
+function getLists() {
+    function waitForAllLists(timeLeft) {
+        if(boardLists.length === boards.length)
+            doneLoading = true;
+        else
+            setTimeout(waitForAllLists.bind(null, timeLeft-100), 100);
+    }
 
-initialize(function(){
-    var doneLoading = true;
-
-    if(scope != 'board') {
-        getBoards(function(data){
-            boards = data;
-
-            function waitForAllLists(timeLeft) {
-                if(boardLists.length === boards.length)
-                    doneLoading = true;
-                else
-                    setTimeout(waitForAllLists.bind(null, timeLeft-100), 100);
-            }
-
-            for(var i=0;i<boards.length;i++) {
-                getListsInBoard(function(data){
-                    boardLists[i] = data;
-                });
-            }
-
-            waitForAllLists(10000);
+    for(var i=0;i<boards.length;i++) {
+        getListsInBoard(function(data){
+            boardLists[i] = data;
         });
     }
 
-    console.log(boardLists);
+    waitForAllLists(10000);
+}
 
+initialize(function(){
+    if(scope != 'board') {
+        getBoards(function(data){
+            boards = data;
+            getLists();
+        });
+    } else {
+        t.board('id','name')
+            .then(function(board){
+                boards.push(board);
+                getLists();
+            });
+    }
+
+    while(!doneLoading) {
+        console.log('boards', boards)
+        console.log('lists', boardLists);
+    }
 });
