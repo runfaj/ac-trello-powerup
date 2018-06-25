@@ -4,6 +4,7 @@ var t = TrelloPowerUp.iframe();
 var token, organizationId;
 var scope = t.arg('scope');
 var boards = [];
+var boardListsLoaded = [];
 var doneLoading = false;
 
 function initialize(callback) {
@@ -72,14 +73,16 @@ function getLists() {
         also tracks when done loading **/
 
     function waitForAllLists(timeLeft) {
-        if(board.lists.length === boards.length || timeLeft <= 0)
+        if(boardListsLoaded.every(function(b){return b;}) || timeLeft <= 0)
             doneLoading = true;
         else
             setTimeout(waitForAllLists.bind(null, timeLeft-100), 100);
     }
 
     boards.forEach(function(board, i){
+        boardListsLoaded.push(false);
         getListsInBoard(board.id, function(data){
+            boardListsLoaded[i] = true;
             boards[i].lists = data;
         });
     });
@@ -120,7 +123,7 @@ function getOpenLists(includeVerify) {
         };
 
         //for each board, loop through lists
-        board.lists.forEach(function(list, i){
+        (board.lists || []).forEach(function(list, i){
             var name = list.name.toLowerCase();
 
             //loop through all valid names above
