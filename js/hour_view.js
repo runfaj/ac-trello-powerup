@@ -63,7 +63,7 @@ function getLists() {
     }
 
     for(var i=0;i<boards.length;i++) {
-        getListsInBoard(boards[i], function(data){
+        getListsInBoard(boards[i].id, function(data){
             boardLists[i] = data;
         });
     }
@@ -131,7 +131,7 @@ initialize(function(){
         if(doneLoading) {
             console.log('boards', boards);
             console.log('lists', boardLists);
-            cosole.log('open lists', getOpenLists());
+            console.log('open lists', getOpenLists());
         }
     })(12000);
 });
