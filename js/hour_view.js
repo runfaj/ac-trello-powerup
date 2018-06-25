@@ -156,10 +156,9 @@ initialize(function(){
     //wait for all the list data to be retrived before continuing
     (function waitForData(timeLeft) {
         if(doneLoading || timeLeft <= 0) {
-            console.log(boards.length, 'boards', boards);
-            console.log(boardLists.length, 'lists', boardLists);
-            var openLists = getOpenLists();
-            console.log(openList.length, 'open lists', openLists);
+            console.log('boards', boards);
+            console.log('lists', boardLists);
+            console.log('open lists', getOpenLists());
         } else {
             setTimeout(waitForData.bind(null, timeLeft - 100));
         }
