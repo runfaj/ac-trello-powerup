@@ -36,7 +36,7 @@ function getBoards(callback) {
     );
 }
 
-function getListsInBoard(boardId, openOnly, includeArchived) {
+function getListsInBoard(boardId, includeArchived) {
     Trello.get(
         'boards/' + boardId + '/lists',
         {
@@ -63,12 +63,49 @@ function getLists() {
     }
 
     for(var i=0;i<boards.length;i++) {
-        getListsInBoard(function(data){
+        getListsInBoard(boards[i], function(data){
             boardLists[i] = data;
         });
     }
 
     waitForAllLists(10000);
+}
+
+function getOpenLists(includeVerify) {
+    var nameList = [
+        'new',
+        'pm',
+        'project manager',
+        'program manager',
+        'design'
+        'writer',
+        'qc',
+        'quality control',
+        'art',
+        'programming',
+        'tech lead',
+        'tl',
+        'programmer',
+    ];
+    if(includeVerify) {
+        nameList.push('verify');
+        nameList.push('verification');
+    }
+    var filtered = [];
+
+    //filter out any non-open lists
+    for(var i=0;i<data.length;i++) {
+        var name = data[i].name.toLowerCase();
+        for(var j=0;j<nameList.length;j++) {
+            var f = nameList[i];
+            if(name.indexOf(f) > -1) {
+                filtered.push(data[i]);
+                continue;
+            }
+        }
+    }
+
+    return filtered;
 }
 
 initialize(function(){
@@ -92,8 +129,9 @@ initialize(function(){
             doneLoading = true;
 
         if(doneLoading) {
-            console.log('boards', boards)
+            console.log('boards', boards);
             console.log('lists', boardLists);
+            cosole.log('open lists', getOpenLists());
         }
     })(12000);
 });
