@@ -98,8 +98,8 @@ function getOpenLists(includeVerify) {
     var filtered = [];
 
     //filter out any non-open lists
-    for(var b=0;b<boardList.length;b++) {
-        var board = boardList[b];
+    for(var b=0;b<boardLists.length;b++) {
+        var board = boardLists[b];
         var out = [];
 
         for(var i=0;i<board.length;i++) {
@@ -121,6 +121,7 @@ function getOpenLists(includeVerify) {
 
     return filtered;
 }
+
 
 initialize(function(){
     if(scope != 'board') {
