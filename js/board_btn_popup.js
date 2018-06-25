@@ -9,7 +9,9 @@ t.render(checkAuth);
 /** buttons **/
 jQuery('.auth-btn').on('click',checkAuth);
 jQuery('.item.settings').on('click',onSettingsClick);
-jQuery('.item.tasks.mine').on('click',function(){alert('todo');});
+jQuery('.item.tasks.mine').on('click',function(){
+    return t.popup({title: 'My tasks', url: './mytasks.html'});
+});
 jQuery('.item.tasks.projects').on('click',function(){alert('todo');});
 jQuery('.item.tasks.all').on('click',function(){alert('todo');});
 jQuery('.item.hour.mine').on('click',function(){alert('todo');});
@@ -52,6 +54,7 @@ function checkAuth() {
 function onSettingsClick() {
     return t.popup({title: 'Allencomm Power-up Settings', url: './board_settings.html'});
 }
+
 function onRender() {
     // return Promise.all([
     //         t.get('organization', 'shared', 'projects'),
