@@ -48,11 +48,13 @@ function checkAuth() {
         });
 };
 function openTaskView(scope, prettyScope) {
+    var modalHeight = jQuery(document).height() - 48 - 24;
+
     t.modal({
         url: './task_view.html',
         accentColor: '#d46128',
         fullscreen: false,
-        height: 500,
+        height: modalHeight,
         title: 'Task View: ' + prettyScope,
         args: {
             scope: scope
@@ -60,11 +62,13 @@ function openTaskView(scope, prettyScope) {
     });
 }
 function openHourView(scope, prettyScope) {
+    var modalHeight = jQuery(document).height() - 48 - 24;
+
     t.modal({
         url: './hour_view.html',
         accentColor: '#d46128',
         fullscreen: false,
-        height: 500,
+        height: modalHeight,
         title: 'Hour View: ' + prettyScope,
         args: {
             scope: scope
