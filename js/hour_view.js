@@ -123,6 +123,7 @@ function getOpenLists(includeVerify) {
 
             //loop through all valid names above
             for(var j=0;j<nameList.length;j++) {
+                debugger;
                 var f = nameList[j];
 
                 if(name.indexOf(f) > -1) {
