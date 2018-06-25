@@ -1,3 +1,6 @@
+var Promise = TrelloPowerUp.Promise;
+var t = TrelloPowerUp.iframe();
+
 function getBoards() {
     return Promise.all([
             t.get('member', 'private', 'user_token'),
