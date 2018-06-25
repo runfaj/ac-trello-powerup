@@ -4,7 +4,6 @@ var t = TrelloPowerUp.iframe();
 var token, organizationId;
 var scope = t.arg('scope');
 var boards = [];
-var boardLists = [];
 var doneLoading = false;
 
 function initialize(callback) {
@@ -81,7 +80,7 @@ function getLists() {
 
     boards.forEach(function(board, i){
         getListsInBoard(board.id, function(data){
-            boardLists[i] = data;
+            boards[i].lists = data;
         });
     });
 
@@ -113,20 +112,24 @@ function getOpenLists(includeVerify) {
 
     //filter out any non-open lists
     //loop through boards
-    return boardLists.map(function(board, b){
-        var out = [];
+    return boards.map(function(board, b){
+        var out = {
+            id: board.id,
+            name: board.name,
+            lists: []
+        };
 
         //for each board, loop through lists
-        board.forEach(function(list, i){
+        board.lists.forEach(function(list, i){
             var name = list.name.toLowerCase();
 
             //loop through all valid names above
             for(var j=0;j<nameList.length;j++) {
-                var f = nameList[i];
+                var f = nameList[j];
 
                 if(name.indexOf(f) > -1) {
                     //if list name in valid name, add list to output
-                    out.push(list);
+                    out.lists.push(list);
                     continue;
                 }
             }
