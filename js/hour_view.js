@@ -65,6 +65,7 @@ function getListsInBoard(boardId, callback, includeArchived) {
     );
 }
 function getLists() {
+    console.log('load lists')
     /** initializes getting lists for each board
         also tracks when done loading **/
 
@@ -91,7 +92,6 @@ function getLists() {
     waitForAllLists(10000);
 }
 function getOpenLists(includeVerify) {
-    console.log('get open lists');
     /** gets open lists across all boards **/
 
     var nameList = [
@@ -169,7 +169,7 @@ t.render(function(){
                 filteredBoards = getOpenLists();
                 console.log('open lists', filteredBoards);
             } else {
-                setTimeout(waitForData.bind(null, timeLeft - 100));
+                setTimeout(waitForData.bind(null, timeLeft - 100), 100);
             }
         })(12000);
     });
