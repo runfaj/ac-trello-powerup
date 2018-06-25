@@ -42,9 +42,9 @@ function getListsInBoard(boardId, callback, includeArchived) {
         {
             key: 'ad42f1ee6ea8f3fe9e31018b5f861536',
             token: token,
-            filter: includeArchived ? 'all' : 'open,none',
-            cards: includeArchived ? 'all' : 'open,none,visible',
+            cards: includeArchived ? 'all' : 'open',
             card_fields: 'all',
+            filter: includeArchived ? 'all' : 'open',
             fields: 'all'
         },
         function success(data, responseText, xhr) {
@@ -53,6 +53,14 @@ function getListsInBoard(boardId, callback, includeArchived) {
         function error() {}
     );
 }
+
+// https://api.trello.com/1/boards/5b0d6fe552a76d056b9bf3b1/lists
+// ?key=ad42f1ee6ea8f3fe9e31018b5f861536
+// &token=c23b664d731e406dbab0c3ee41546587d48e1f3de80763e06841f54e84d14851
+// &filter=open
+// &cards=open
+// &card_fields=all
+// &fields=all
 
 function getLists() {
     function waitForAllLists(timeLeft) {
@@ -98,8 +106,8 @@ function getOpenLists(includeVerify) {
     var filtered = [];
 
     //filter out any non-open lists
-    for(var b=0;b<boardList.length;b++) {
-        var board = boardList[b];
+    for(var b=0;b<boardLists.length;b++) {
+        var board = boardLists[b];
         var out = [];
 
         for(var i=0;i<board.length;i++) {
@@ -121,6 +129,7 @@ function getOpenLists(includeVerify) {
 
     return filtered;
 }
+
 
 initialize(function(){
     if(scope != 'board') {
