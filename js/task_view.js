@@ -94,6 +94,7 @@ for(var i = 0; i < this.boardData.length; i++)
 		}
 		table.append(innerRow);
 	}
+	console.log(table);
 	document.write(table);
 }
 
