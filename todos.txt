@@ -2,42 +2,58 @@ Todos
 
 settings
 ========
-future: add setting for rates for each group
+future: add setting for rates for each role
 future: need settings to define teams on a project (pm/design/AL/TL)
 
+///////////////////////// old stuff
 task list view
 ==============
-My tasks (everything assigned to me across all boards, or specific cards I'm watching)
-My projects (boards i'm watching and in my group)
+My tasks (everything assigned to me across all boards)
+    scope: mine
+future: My projects (boards i'm watching and in my role)
     all roles also can see the verify lists
-All projects (all projects and in my group)
-
-sorting should be based on priority tags for each card
+    scope: projects
+All projects (all projects and in my role)
+    scope: all
 
 hours view
 ==========
-My tasks (everything open, assigned to me)
+My tasks (everything open on all boards, assigned to me)
+    scope: mine
 Board tasks (all open tasks for a board)
-Group tasks (all open tasks for a group)
+    scope: board
+Role tasks (all open tasks for a role)
     filter by person
+    scope: role
 future: My Team Tasks (all open tasks for my team)
-future: summary of hours per group with the associated cost of those hours
+future: summary of hours per role with the associated cost of those hours
     for selected date range
+/////////////////////////// end old stuff
+
+task view
+===============
+args:
+    scope: me, all
+filters:
+    person (if scope == all)
+    board (if scope == all)
+    role (if scope == all)
+    group by - role or board (if scope == all)
+    date range - due between
+    include verify
+summary section:
+    ??
+task section: collapsible lists, listing cards
+    if person == me
+        group by filter is board
+        person filter is me
 
 
+misc
+===========
+Batch requests for trello.get (max group of 10 together)
 
-api call example:
 
-Trello.get(
-    'organizations/' + organization.id + '/boards',
-    {
-        key: 'ad42f1ee6ea8f3fe9e31018b5f861536',
-        token: user_token,
-        filter: 'open',
-        fields: 'name,id'
-    },
-    function success() {
-        console.log(arguments)
-    },
-    function error() {}
-);
+notes
+================================================
+apparently watching is not something you can get on a board or card

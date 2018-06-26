@@ -50,19 +50,20 @@
 <body>
     <div class="item-list">
         <div class="regular-view hide">
-            <h4>Task View</h4>
-            <div class="item tasks mine">My Tasks<div class="info-icon" text="Task View, My Tasks: View everything assigned to me, and every open card I'm watching, across all boards.">i</div></div>
-            <div class="item tasks projects">My Projects<div class="info-icon" text="Task View, My Projects: View all cards in my group (e.g. Designer) across all boards that I'm watching.">i</div></div>
-            <div class="item tasks all">All Projects<div class="info-icon" text="Task View, All Projects: View all cards across all boards for my group (e.g. Designer).">i</div></div>
+            <!--<h4>Task View</h4>-->
+            <div class="item tasks" data-scope="me">My Tasks<div class="info-icon" text="Task View, My Tasks: View everything open and assigned to me, across all boards.">i</div></div>
+            <!--<div class="item tasks projects">My Projects<div class="info-icon" text="Task View, My Projects: View all cards in my group (e.g. Designer) across all boards that I'm watching.">i</div></div>-->
+            <div class="item tasks" data-scope="all">All Tasks<div class="info-icon" text="Task View, All Projects: View all open cards, across all boards.">i</div></div>
 
+            <!--
             <hr />
 
             <h4>Hour View</h4>
             <div class="item hour mine">My Tasks<div class="info-icon" text="Hour View, My Tasks: View hours for everything open and assigned to me.">i</div></div>
             <div class="item hour board">Board Tasks<div class="info-icon" text="Hour View, Board Tasks: View hours for all open tasks on this board.">i</div></div>
             <div class="item hour group">Group Tasks<div class="info-icon" text="Hour View, Group Tasks: View all open tasks across all boards for a group (e.g. Designer).">i</div></div>
-
-            <hr class="last-separator" />
+            -->
+            <hr />
 
             <div class="item settings">Settings</div>
         </div>
