@@ -65,7 +65,7 @@ this.boardData = [
 
 console.log(this.boardData);
 
-for(var i = 0; i < this.boardData.length, i++)
+for(var i = 0; i < this.boardData.length; i++)
 {
 	var table = $('<table>').addClass(this.boardData[i].board + 'Table');
 	var row = $('<th>').addClass('boardRow').text(this.boardData[i].board);
