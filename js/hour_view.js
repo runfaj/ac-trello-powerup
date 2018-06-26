@@ -1,21 +1,22 @@
+/**** todo:
+    Batch requests (max group of 10 together)
+****/
+
 var Promise = TrelloPowerUp.Promise;
 var t = TrelloPowerUp.iframe();
 
 /** args from parent **/
-var scope = t.arg('scope');
+var scopeFilter = t.arg('scope');
 
 /** state variables **/
 var token, organizationId;
-var doneLoading = false;
-var boardListsLoaded = [];
 
 /** data variables **/
 var boards = [];
-var filteredBoards = [];
 
-/*************** utils ****************/
+/************ data getters *************/
 function initialize(callback) {
-    /** initialize by getting user token and org id **/
+    /** initialize by getting user token and org id, returns bluebird promise **/
 
     return Promise.all([
         t.get('member', 'private', 'user_token'),
@@ -29,9 +30,9 @@ function initialize(callback) {
     });
 }
 function getBoards(callback) {
-    /** get all boards for organization **/
+    /** get all boards for organization, returns jquery promise **/
 
-    Trello.get(
+    return Trello.get(
         'organizations/' + organizationId + '/boards',
         {
             key: 'ad42f1ee6ea8f3fe9e31018b5f861536',
@@ -46,14 +47,14 @@ function getBoards(callback) {
     );
 }
 function getListsInBoard(boardId, callback, includeArchived) {
-    /** for a board, get all lists **/
+    /** for a board, get all lists, returns jquery promise **/
 
-    Trello.get(
+    return Trello.get(
         'boards/' + boardId + '/lists',
         {
             key: 'ad42f1ee6ea8f3fe9e31018b5f861536',
             token: token,
-            cards: includeArchived ? 'all' : 'open',
+            cards: includeArchived ? 'all' : 'visible',
             card_fields: 'all',
             filter: includeArchived ? 'all' : 'open',
             fields: 'all'
@@ -64,32 +65,56 @@ function getListsInBoard(boardId, callback, includeArchived) {
         function error() {}
     );
 }
+function getCardPluginData(cardId) {
+    /** gets plugin data for a specific card, returns jquery promise **/
+
+    return Trello.get(
+        'cards/' + cardId + '/pluginData',
+        {
+            key: 'ad42f1ee6ea8f3fe9e31018b5f861536',
+            token: token
+        },
+        function success(data, responseText, xhr) {
+            if(callback) callback(data);
+        },
+        function error() {}
+    );
+}
+
+/*************** utils ****************/
 function getLists() {
     console.log('load lists')
-    /** initializes getting lists for each board
-        also tracks when done loading **/
+    /** initializes getting lists for each board, returns collection of promises **/
 
-    doneLoading = false;
-
-    function waitForAllLists(timeLeft) {
-        if(boardListsLoaded.every(function(b){return b;}) || timeLeft <= 0) {
-            doneLoading = true;
-            console.log('done loading')
-        } else {
-            setTimeout(waitForAllLists.bind(null, timeLeft-100), 100);
-        }
-    }
+    var promises = [];
 
     boards.forEach(function(board, i){
-        boardListsLoaded.push(false);
-        getListsInBoard(board.id, function(data){
+        promises.push(getListsInBoard(board.id, function(data){
             boards[i].lists = data;
             console.log('list loaded:', boards[i].name)
-            boardListsLoaded[i] = true;
+        }));
+    });
+
+    return promises;
+}
+function getCardDatas() {
+    /** gets plugin data for all cards, returns collection of promises **/
+    /** NOTE! This should be called after the lists and cards have been filtered to help save request amounts **/
+
+    var promises = [];
+
+    boards.forEach(function(board, i){
+        board.lists.forEach(function(list, l){
+            list.cards.forEach(function(card, c){
+                promises.push(getCardPluginData(card.id, function(data){
+                    boards[i].lists[l].cards[c].customData = data;
+                    console.log('card loaded:', boards[i].name)
+                }));
+            });
         });
     });
 
-    waitForAllLists(10000);
+    return promises;
 }
 function getOpenLists(includeVerify) {
     /** gets open lists across all boards **/
@@ -144,33 +169,55 @@ function getOpenLists(includeVerify) {
     });
 }
 
-
 // start getting data
 t.render(function(){
     return initialize(function(){
+        console.log('start loading');
+        var doneLoading = false;
+
         //compile list of boards (either 1 or many)
-        if(scope != 'board') {
+        if(scopeFilter != 'board') {
             getBoards(function(data){
                 boards = data;
-                getLists();
+
+                //after we have the boards, get the list/card data
+                jQuery.when.apply(jQuery, getLists()).then(onListsFinished);
             });
         } else {
             t.board('id','name')
                 .then(function(board){
                     boards.push(board);
-                    getLists();
+
+                    //after we have the boards, get the list/card data
+                    jQuery.when.apply(jQuery, getLists()).then(onListsFinished);
                 });
         }
 
-        //wait for all the list data to be retrived before continuing
+        function onListsFinished() {
+            boards = getOpenLists(true);
+
+            // after we have the lists, get all the card custom data
+            jQuery.when.apply(jQuery, getCardDatas()).then(function(){
+                doneLoading = true;
+            });
+        }
+
+        //wait for all the data to be retrived before continuing
         (function waitForData(timeLeft) {
             if(doneLoading || timeLeft <= 0) {
-                console.log('boards', boards);
-                filteredBoards = getOpenLists();
-                console.log('open lists', filteredBoards);
+                console.log('done loading');
+                getInitialView();
             } else {
                 setTimeout(waitForData.bind(null, timeLeft - 100), 100);
             }
-        })(12000);
+        })(15000);
     });
 });
+
+function getInitialView() {
+    if(scopeFilter === 'me') {
+
+    } else {
+
+    }
+}
