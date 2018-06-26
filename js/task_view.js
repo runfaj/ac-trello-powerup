@@ -67,36 +67,32 @@ console.log(this.boardData);
 
 for(var i = 0; i < this.boardData.length; i++)
 {
-	var table = $('<table>').addClass(this.boardData[i].board + 'Table');
-	var row = $('<th>').addClass('boardRow').text(this.boardData[i].board);
+	var table = "<table class='" + this.boardData[i].board + "Table' >";
+	table += "<th class='boardRow'>" + this.boardData[i].board + "</th>";
 
-	$('body').append(table);
-	table.append(row);
 	// add .board collapse box
 	for(var y = 0; y < this.boardData[i].lists.length; y++)
 	{
-		var innerRow =  $('<tr>');
-		table.append(innerRow);
+		table += "<tr>";
 		//add .lists collapse box
+		table += "<td class='top'>Title</td>";
+		table += "<td class='top'>Due</td>";
+		table += "<td class='top'>Priority</td>";
+		table += "<td class='top'>Hours</td>";
+
 		for(var x = 0; x < this.boardData[i].lists[y].items.length; x++)
 		{
-			var titleCell = $('<td>').text(this.boardData[i].lists[y].items[x].title);
-			innerRow.append(titleCell);
-
-			var dueCell = $('<td>').text(this.boardData[i].lists[y].items[x].due);
-			innerRow.append(dueCell);
-
-			var priorityCell = $('<td>').text(this.boardData[i].lists[y].items[x].priority);
-			innerRow.append(priorityCell);
-
-			var hoursCell = $('<td>').text(this.boardData[i].lists[y].items[x].hours);
-			innerRow.append(hoursCell);
+			table += "<td>" + this.boardData[i].lists[y].items[x].title + "</td>";
+			table += "<td>" + this.boardData[i].lists[y].items[x].due + "</td>";
+			table += "<td>" + this.boardData[i].lists[y].items[x].priority + "</td>";
+			table += "<td>" + this.boardData[i].lists[y].items[x].hours + "</td>";
 			//add .items data into TD
 		}
+		table += "</tr>";
 		
 	}
-	console.log(table);
-	document.write(table);
+	table += "</table>";
+	$(.body).html = table;
 }
 
 
@@ -117,28 +113,6 @@ function getBoards() {
                 function success(data, responseText, xhr) {
                     console.log('json data:', data)
                     this.boards = data;
-                     for(var i = 0; i < data.length; i++)
-					{
-						return Promise.all([
-				            t.get('member', 'private', 'user_token'),
-				            t.organization('id')
-				        ])
-				        .spread(function(user_token, organization) {
-				            Trello.get(
-				                'organizations/' + organization.id + '/boards' + board.id + '/lists',
-				                {
-				                    key: 'ad42f1ee6ea8f3fe9e31018b5f861536',
-				                    token: user_token,
-				                    filter: 'open',
-				                    fields: 'name,id'
-				                },
-				                function success(data, responseText, xhr) {
-				                    console.log('json data:', data)
-				                },
-				                function error() {}
-				            );
-				        });
-					}
                 },
                 function error() {}
             );
