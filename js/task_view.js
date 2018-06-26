@@ -91,6 +91,7 @@ for(var i = 0; i < this.boardData.length; i++)
 		table += "</tr>";
 		
 	}
+	console.log('table:', table);
 	table += "</table>";
 	$(.body).html = table;
 }
