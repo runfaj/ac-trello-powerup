@@ -65,7 +65,7 @@ function getListsInBoard(boardId, callback) {
         function error() {}
     );
 }
-function getCardPluginData(cardId) {
+function getCardPluginData(cardId, callback) {
     /** gets plugin data for a specific card, returns jquery promise **/
 
     return Trello.get(
