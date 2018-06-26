@@ -63,6 +63,8 @@ this.boardData = [
 	}]
 }];
 
+console.log(this.boardData);
+
 for(var i = 0; i < this.boardData.length, i++)
 {
 	var table = $('<table>').addClass(this.boardData[i].board + 'Table');
