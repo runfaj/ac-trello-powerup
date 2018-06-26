@@ -44,6 +44,8 @@ function checkAuth() {
         });
 };
 function openTaskView() {
+    return; /////////////disabling
+
     var el = jQuery(this);
     var scope = el.data('scope');
     var label = el.find('span').text();
