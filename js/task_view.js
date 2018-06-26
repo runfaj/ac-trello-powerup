@@ -76,6 +76,7 @@ for(var i = 0; i < this.boardData.length; i++)
 	for(var y = 0; y < this.boardData[i].lists.length; y++)
 	{
 		var innerRow =  $('<tr>');
+		table.append(innerRow);
 		//add .lists collapse box
 		for(var x = 0; x < this.boardData[i].lists[y].items.length; x++)
 		{
@@ -92,7 +93,7 @@ for(var i = 0; i < this.boardData.length; i++)
 			innerRow.append(hoursCell);
 			//add .items data into TD
 		}
-		table.append(innerRow);
+		
 	}
 	console.log(table);
 	document.write(table);
