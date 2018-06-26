@@ -46,7 +46,7 @@ function checkAuth() {
 function openTaskView() {
     var el = jQuery(this);
     var scope = el.data('scope');
-    var label = el.text();
+    var label = el.find('span').text();
 
     t.modal({
         url: './hour_view.html',

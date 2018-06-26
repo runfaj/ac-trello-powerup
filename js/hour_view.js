@@ -46,7 +46,7 @@ function getBoards(callback) {
         function error() {}
     );
 }
-function getListsInBoard(boardId, callback, includeArchived) {
+function getListsInBoard(boardId, callback) {
     /** for a board, get all lists, returns jquery promise **/
 
     return Trello.get(
@@ -54,9 +54,9 @@ function getListsInBoard(boardId, callback, includeArchived) {
         {
             key: 'ad42f1ee6ea8f3fe9e31018b5f861536',
             token: token,
-            cards: includeArchived ? 'all' : 'visible',
+            cards: 'open',
             card_fields: 'all',
-            filter: includeArchived ? 'all' : 'open',
+            filter: 'open',
             fields: 'all'
         },
         function success(data, responseText, xhr) {
